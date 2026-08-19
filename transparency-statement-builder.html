@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Transparency Statement Builder for meaningful disclosure of generative AI use in academic work.">
+<title>Transparency Statement Builder | Critical AI Literacy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+<style>
+.page-hero{padding:4rem 0 2.5rem;background:linear-gradient(180deg,#f6f2e9 0%,#fff 100%)}
+.breadcrumbs{font-size:.9rem;margin-bottom:1.2rem}.breadcrumbs a{color:inherit}
+.tool-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,.8fr);gap:2.5rem;align-items:start}
+.tool-sidebar{position:sticky;top:6rem}.tool-sidebar .box{padding:1.15rem;border:1px solid rgba(22,38,58,.12);border-radius:1rem;background:#fff;margin-bottom:1rem}
+.builder{display:grid;gap:1rem}.builder-card{padding:1.2rem 1.3rem;border:1px solid rgba(22,38,58,.14);border-radius:1rem;background:#fff}
+.builder-card h2{font-size:1.15rem;margin:.1rem 0 .7rem}
+.builder-card label{display:grid;gap:.35rem;font-weight:700;margin:.7rem 0}
+.builder-card select,.builder-card textarea,.builder-card input[type="text"]{width:100%;padding:.7rem .8rem;border:1px solid rgba(22,38,58,.2);border-radius:.7rem;font:inherit;color:inherit;background:#fff}
+.builder-card textarea{min-height:90px;resize:vertical}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}
+.choice{display:flex;gap:.55rem;align-items:flex-start;padding:.75rem;border:1px solid rgba(22,38,58,.1);border-radius:.75rem;background:#f8faf9}
+.choice input{margin-top:.2rem}
+.output-box{padding:1.15rem 1.25rem;background:#16263a;color:#fff;border-radius:1rem}
+.output-box textarea{width:100%;min-height:180px;padding:1rem;border-radius:.75rem;border:0;font:inherit;line-height:1.6}
+.output-actions{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:.8rem}
+.checklist{display:grid;gap:1rem}
+.check-section{padding:1.15rem 1.25rem;border:1px solid rgba(22,38,58,.13);border-radius:1rem;background:#fff}
+.check-section h2{font-size:1.2rem;margin:.1rem 0 .6rem}
+.check-item{display:grid;grid-template-columns:auto 1fr;gap:.65rem;align-items:start;padding:.6rem 0;border-bottom:1px solid rgba(22,38,58,.07)}
+.check-item:last-child{border-bottom:0}.check-item input{margin-top:.25rem;transform:scale(1.15)}
+.progress-wrap{padding:1rem 1.15rem;border-radius:1rem;background:#f7faf9;margin-bottom:1rem}
+.progress-track{height:12px;border-radius:999px;background:#e3e8e6;overflow:hidden}.progress-bar{height:100%;width:0%;background:#3f756f;transition:width .2s ease}
+.progress-text{margin:.5rem 0 0;font-weight:700}
+.reflection-box{padding:1rem 1.1rem;border-left:4px solid #7c5c96;background:#faf7fc;border-radius:0 .8rem .8rem 0;margin-top:1rem}
+.tool-callout{padding:1.2rem 1.35rem;background:#16263a;color:#fff;border-radius:1rem;margin-top:1rem}.tool-callout a{color:#fff}
+.print-note{font-size:.88rem;color:#68737c}
+@media(max-width:900px){.tool-layout{grid-template-columns:1fr}.tool-sidebar{position:static}}
+@media(max-width:650px){.choice-grid{grid-template-columns:1fr}}
+@media print{header,footer,.tool-sidebar,.output-actions,.breadcrumbs{display:none!important}.page-hero{padding:1rem 0}.builder-card,.check-section{break-inside:avoid}}
+</style>
+</head>
+<body><a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header"><div class="shell nav-wrap"><a class="brand" href="index.html"><span class="brand-mark">CAIL</span><span class="brand-text">Critical AI Literacy</span></a><nav class="site-nav"><a href="index.html#teaching">Teaching</a><a href="ai-use-decision-tree.html">Decision Tree</a><a href="prompt-verification-ladder.html">Verification Ladder</a><a href="transparency-statement-builder.html" aria-current="page">Transparency Builder</a></nav></div></header>
+<main id="main">
+<section class="page-hero"><div class="shell"><p class="breadcrumbs"><a href="index.html">Home</a> / Teaching / Transparency Statement Builder</p><p class="eyebrow">Teaching Resource</p><h1>Transparency Statement Builder</h1><p class="lede">Turn “I used ChatGPT” into a disclosure that tells a reader what AI actually contributed, what remained human, and what was verified.</p></div></section>
+
+<section class="section"><div class="shell tool-layout">
+<article>
+<p class="print-note">Use the builder for student work, research notes, creative projects, or instructor-created materials. Adapt the final wording to local policy.</p>
+<div class="builder">
+<section class="builder-card">
+<h2>1. What kind of work is this?</h2>
+<label>Context
+<select id="ts-context">
+<option value="assignment">Course assignment</option>
+<option value="research">Research or scholarly work</option>
+<option value="presentation">Presentation or teaching material</option>
+<option value="creative">Creative work</option>
+<option value="other">Other</option>
+</select></label>
+</section>
+
+<section class="builder-card">
+<h2>2. What did AI help with?</h2>
+<div class="choice-grid">
+<label class="choice"><input type="checkbox" value="brainstorming ideas"><span><strong>Brainstorming</strong><br>Ideas, questions, examples, or possible directions.</span></label>
+<label class="choice"><input type="checkbox" value="developing search terms"><span><strong>Search planning</strong><br>Keywords, synonyms, or search directions.</span></label>
+<label class="choice"><input type="checkbox" value="explaining concepts"><span><strong>Explanation</strong><br>Initial explanations or examples.</span></label>
+<label class="choice"><input type="checkbox" value="organizing or outlining"><span><strong>Organization</strong><br>Outlining, sequencing, or structuring material.</span></label>
+<label class="choice"><input type="checkbox" value="revising wording or clarity"><span><strong>Revision</strong><br>Clarity, wording, grammar, or tone.</span></label>
+<label class="choice"><input type="checkbox" value="generating draft material"><span><strong>Drafting</strong><br>Producing text or other material that was later reviewed and revised.</span></label>
+</div>
+</section>
+
+<section class="builder-card">
+<h2>3. What did you verify?</h2>
+<div class="choice-grid">
+<label class="choice"><input type="checkbox" class="verify-choice" value="factual claims"><span>Factual claims</span></label>
+<label class="choice"><input type="checkbox" class="verify-choice" value="citations and source existence"><span>Citations and source existence</span></label>
+<label class="choice"><input type="checkbox" class="verify-choice" value="statistics or data"><span>Statistics or data</span></label>
+<label class="choice"><input type="checkbox" class="verify-choice" value="disciplinary terminology or concepts"><span>Terminology or concepts</span></label>
+<label class="choice"><input type="checkbox" class="verify-choice" value="bias, omissions, or missing perspectives"><span>Bias, omissions, or missing perspectives</span></label>
+<label class="choice"><input type="checkbox" class="verify-choice" value="nothing because the AI was used only for low-stakes process support"><span>No factual verification needed</span></label>
+</div>
+</section>
+
+<section class="builder-card">
+<h2>4. What remained your responsibility?</h2>
+<div class="choice-grid">
+<label class="choice"><input type="checkbox" class="human-choice" value="the final argument and conclusions"><span>Argument and conclusions</span></label>
+<label class="choice"><input type="checkbox" class="human-choice" value="source selection and evaluation"><span>Source selection and evaluation</span></label>
+<label class="choice"><input type="checkbox" class="human-choice" value="the final wording and organization"><span>Final wording and organization</span></label>
+<label class="choice"><input type="checkbox" class="human-choice" value="interpretation and disciplinary judgment"><span>Interpretation and judgment</span></label>
+</div>
+<label>Optional details
+<textarea id="ts-details" placeholder="Example: I used ChatGPT to generate search-term alternatives, but all sources were located and evaluated independently in library databases."></textarea></label>
+</section>
+
+<div class="output-box">
+<h2>Your transparency statement</h2>
+<textarea id="ts-output" readonly></textarea>
+<div class="output-actions">
+<button class="button primary" id="ts-copy" type="button">Copy statement</button>
+<button class="button secondary" id="ts-reset" type="button">Reset</button>
+</div>
+<p id="ts-status" aria-live="polite"></p>
+</div>
+</div>
+</article>
+
+<aside class="tool-sidebar">
+<div class="box"><p class="label">Core principle</p><h2>Disclosure should describe contribution, not merely name the tool.</h2><p>A useful statement helps a reader understand what AI did, what was checked, and where human judgment remained.</p></div>
+<div class="box"><p class="label">Weak statement</p><p>“I used ChatGPT for this assignment.”</p></div>
+<div class="box"><p class="label">Stronger statement</p><p>“I used ChatGPT to brainstorm possible subtopics and generate alternative search terms. I located and evaluated all sources independently and wrote the final analysis myself.”</p></div>
+</aside>
+</div></section>
+</main>
+<footer class="site-footer"><div class="shell footer-grid"><div><strong>Critical AI Literacy</strong><p>Research, teaching, and practice for higher education.</p></div><div><a href="index.html#teaching">Back to Teaching Resources →</a></div></div></footer>
+
+<script>
+(()=>{
+const context=document.getElementById('ts-context');
+const details=document.getElementById('ts-details');
+const output=document.getElementById('ts-output');
+const checks=[...document.querySelectorAll('.builder input[type="checkbox"]')];
+function listSentence(items){if(!items.length)return '';if(items.length===1)return items[0];if(items.length===2)return items[0]+' and '+items[1];return items.slice(0,-1).join(', ')+', and '+items[items.length-1];}
+function update(){
+ const uses=checks.filter(x=>x.checked&&!x.classList.contains('verify-choice')&&!x.classList.contains('human-choice')).map(x=>x.value);
+ const verified=checks.filter(x=>x.checked&&x.classList.contains('verify-choice')).map(x=>x.value);
+ const human=checks.filter(x=>x.checked&&x.classList.contains('human-choice')).map(x=>x.value);
+ const ctx={assignment:'this course assignment',research:'this research or scholarly work',presentation:'this presentation or teaching material',creative:'this creative work',other:'this work'}[context.value];
+ let s='For '+ctx+', I used generative AI';
+ if(uses.length)s+=' to assist with '+listSentence(uses);
+ else s+=' in a limited supporting role';
+ s+='.';
+ if(verified.length)s+=' I independently checked '+listSentence(verified)+'.';
+ if(human.length)s+=' I remained responsible for '+listSentence(human)+'.';
+ if(details.value.trim())s+=' '+details.value.trim();
+ output.value=s;
+}
+[context,details,...checks].forEach(x=>x.addEventListener(x.tagName==='TEXTAREA'?'input':'change',update));
+document.getElementById('ts-reset').onclick=()=>{checks.forEach(x=>x.checked=false);details.value='';context.value='assignment';update();};
+document.getElementById('ts-copy').onclick=async()=>{try{await navigator.clipboard.writeText(output.value);document.getElementById('ts-status').textContent='Copied.';}catch(e){document.getElementById('ts-status').textContent='Select the statement and copy it manually.';}};
+update();
+})();
+</script>
+<script src="script.js"></script>
+</body></html>

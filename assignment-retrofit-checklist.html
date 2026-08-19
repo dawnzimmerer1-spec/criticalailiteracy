@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Assignment Retrofit Checklist for redesigning assignments around learning evidence, process, verification, transparency, and responsible AI use.">
+<title>Assignment Retrofit Checklist | Critical AI Literacy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+<style>
+.page-hero{padding:4rem 0 2.5rem;background:linear-gradient(180deg,#f6f2e9 0%,#fff 100%)}
+.breadcrumbs{font-size:.9rem;margin-bottom:1.2rem}.breadcrumbs a{color:inherit}
+.tool-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,.8fr);gap:2.5rem;align-items:start}
+.tool-sidebar{position:sticky;top:6rem}.tool-sidebar .box{padding:1.15rem;border:1px solid rgba(22,38,58,.12);border-radius:1rem;background:#fff;margin-bottom:1rem}
+.builder{display:grid;gap:1rem}.builder-card{padding:1.2rem 1.3rem;border:1px solid rgba(22,38,58,.14);border-radius:1rem;background:#fff}
+.builder-card h2{font-size:1.15rem;margin:.1rem 0 .7rem}
+.builder-card label{display:grid;gap:.35rem;font-weight:700;margin:.7rem 0}
+.builder-card select,.builder-card textarea,.builder-card input[type="text"]{width:100%;padding:.7rem .8rem;border:1px solid rgba(22,38,58,.2);border-radius:.7rem;font:inherit;color:inherit;background:#fff}
+.builder-card textarea{min-height:90px;resize:vertical}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}
+.choice{display:flex;gap:.55rem;align-items:flex-start;padding:.75rem;border:1px solid rgba(22,38,58,.1);border-radius:.75rem;background:#f8faf9}
+.choice input{margin-top:.2rem}
+.output-box{padding:1.15rem 1.25rem;background:#16263a;color:#fff;border-radius:1rem}
+.output-box textarea{width:100%;min-height:180px;padding:1rem;border-radius:.75rem;border:0;font:inherit;line-height:1.6}
+.output-actions{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:.8rem}
+.checklist{display:grid;gap:1rem}
+.check-section{padding:1.15rem 1.25rem;border:1px solid rgba(22,38,58,.13);border-radius:1rem;background:#fff}
+.check-section h2{font-size:1.2rem;margin:.1rem 0 .6rem}
+.check-item{display:grid;grid-template-columns:auto 1fr;gap:.65rem;align-items:start;padding:.6rem 0;border-bottom:1px solid rgba(22,38,58,.07)}
+.check-item:last-child{border-bottom:0}.check-item input{margin-top:.25rem;transform:scale(1.15)}
+.progress-wrap{padding:1rem 1.15rem;border-radius:1rem;background:#f7faf9;margin-bottom:1rem}
+.progress-track{height:12px;border-radius:999px;background:#e3e8e6;overflow:hidden}.progress-bar{height:100%;width:0%;background:#3f756f;transition:width .2s ease}
+.progress-text{margin:.5rem 0 0;font-weight:700}
+.reflection-box{padding:1rem 1.1rem;border-left:4px solid #7c5c96;background:#faf7fc;border-radius:0 .8rem .8rem 0;margin-top:1rem}
+.tool-callout{padding:1.2rem 1.35rem;background:#16263a;color:#fff;border-radius:1rem;margin-top:1rem}.tool-callout a{color:#fff}
+.print-note{font-size:.88rem;color:#68737c}
+@media(max-width:900px){.tool-layout{grid-template-columns:1fr}.tool-sidebar{position:static}}
+@media(max-width:650px){.choice-grid{grid-template-columns:1fr}}
+@media print{header,footer,.tool-sidebar,.output-actions,.breadcrumbs{display:none!important}.page-hero{padding:1rem 0}.builder-card,.check-section{break-inside:avoid}}
+</style>
+</head>
+<body><a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header"><div class="shell nav-wrap"><a class="brand" href="index.html"><span class="brand-mark">CAIL</span><span class="brand-text">Critical AI Literacy</span></a><nav class="site-nav"><a href="index.html#teaching">Teaching</a><a href="ai-use-decision-tree.html">Decision Tree</a><a href="prompt-verification-ladder.html">Verification Ladder</a><a href="assignment-retrofit-checklist.html" aria-current="page">Retrofit Checklist</a></nav></div></header>
+<main id="main">
+<section class="page-hero"><div class="shell"><p class="breadcrumbs"><a href="index.html">Home</a> / Teaching / Assignment Retrofit Checklist</p><p class="eyebrow">Teaching Resource</p><h1>Assignment Retrofit Checklist</h1><p class="lede">Redesign an existing assignment without throwing it into the pedagogical wood chipper. Keep the learning goal, then make process, evidence, judgment, and responsible AI choices more visible.</p></div></section>
+
+<section class="section"><div class="shell tool-layout">
+<article>
+<div class="progress-wrap"><strong>Retrofit progress</strong><div class="progress-track" aria-hidden="true"><div class="progress-bar" id="retro-progress"></div></div><p class="progress-text"><span id="retro-count">0</span> of 27 checks complete</p></div>
+<div class="checklist"><section class="check-section"><h2>1. Clarify the learning evidence</h2><label class="check-item"><input class="retro-check" type="checkbox"><span>Can a student explain what knowledge, skill, or judgment the assignment is supposed to demonstrate?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Does the assignment require evidence of student thinking, not only a polished final product?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Would an instructor still be able to see learning if a student used AI appropriately?</span></label></section><section class="check-section"><h2>2. Decide where AI belongs</h2><label class="check-item"><input class="retro-check" type="checkbox"><span>Have you stated whether AI is allowed, limited, optional, or prohibited?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Have you explained why that level of AI use fits the learning goal?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Have you distinguished acceptable support from AI doing the central intellectual work?</span></label></section><section class="check-section"><h2>3. Make process visible</h2><label class="check-item"><input class="retro-check" type="checkbox"><span>Does the assignment include checkpoints such as proposals, notes, drafts, annotations, reflections, or source logs?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Can students show how their thinking changed over time?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Is there a place for students to document how AI affected their process?</span></label></section><section class="check-section"><h2>4. Strengthen evidence requirements</h2><label class="check-item"><input class="retro-check" type="checkbox"><span>Must students support important claims with real sources?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Are source requirements appropriate to the discipline and task?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Does the assignment require students to verify AI-generated claims or citations independently?</span></label></section><section class="check-section"><h2>5. Build in critical evaluation</h2><label class="check-item"><input class="retro-check" type="checkbox"><span>Do students have to evaluate accuracy, bias, omissions, uncertainty, or competing perspectives?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Does the assignment ask who or what may be missing from an AI-generated response?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Are students asked to make judgments rather than simply summarize output?</span></label></section><section class="check-section"><h2>6. Protect agency and authorship</h2><label class="check-item"><input class="retro-check" type="checkbox"><span>Does the assignment preserve a meaningful role for student decision-making?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Can students explain which ideas, interpretations, or conclusions are their own?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Would students know when using less AI is the better choice?</span></label></section><section class="check-section"><h2>7. Address transparency</h2><label class="check-item"><input class="retro-check" type="checkbox"><span>Have you told students what kind of AI disclosure is expected?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Does the disclosure ask what AI contributed, not only which tool was used?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Can students explain what they verified and what remained their responsibility?</span></label></section><section class="check-section"><h2>8. Check access and equity</h2><label class="check-item"><input class="retro-check" type="checkbox"><span>Does the assignment assume access to a paid AI tool?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Is there a non-AI pathway for students who cannot or do not want to use AI?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Have you considered accessibility, privacy, device access, language, and data concerns?</span></label></section><section class="check-section"><h2>9. Reconsider grading</h2><label class="check-item"><input class="retro-check" type="checkbox"><span>Does the rubric reward reasoning, evidence, judgment, and process rather than surface polish alone?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Could AI-generated fluency receive a high score without demonstrating learning?</span></label><label class="check-item"><input class="retro-check" type="checkbox"><span>Have you included criteria that make quality of evidence and decision-making visible?</span></label></section></div>
+
+<div class="reflection-box">
+<h2>Final retrofit test</h2>
+<p>After revising the assignment, ask:</p>
+<p><strong>If a student used generative AI appropriately, could I still see what that student knows, how they reasoned, what evidence they used, and what decisions they made?</strong></p>
+<p>If the answer is yes, the assignment is probably becoming more resilient. If the answer is no, add more visible process or judgment.</p>
+</div>
+
+<div class="tool-callout"><h2>Retrofit, do not merely restrict.</h2><p>The goal is not to make every assignment AI-proof. The goal is to make learning visible enough that appropriate AI use cannot erase the evidence you actually care about.</p></div>
+</article>
+
+<aside class="tool-sidebar">
+<div class="box"><p class="label">Start small</p><p>You do not need to rebuild the entire assignment. Pick two or three weak points, such as unclear AI rules, invisible process, or thin source requirements.</p></div>
+<div class="box"><p class="label">Fast faculty workshop</p><p>Give instructors one existing assignment and 20 minutes. Ask them to complete Sections 1, 2, 3, and 9 first.</p></div>
+<div class="box"><p class="label">Related resources</p><a href="ai-use-decision-tree.html">AI Use Decision Tree →</a><br><a href="transparency-statement-builder.html">Transparency Statement Builder →</a></div>
+</aside>
+</div></section>
+</main>
+<footer class="site-footer"><div class="shell footer-grid"><div><strong>Critical AI Literacy</strong><p>Research, teaching, and practice for higher education.</p></div><div><a href="index.html#teaching">Back to Teaching Resources →</a></div></div></footer>
+<script>
+(()=>{
+const boxes=[...document.querySelectorAll('.retro-check')],bar=document.getElementById('retro-progress'),count=document.getElementById('retro-count');
+function update(){const n=boxes.filter(x=>x.checked).length;count.textContent=n;bar.style.width=((n/boxes.length)*100)+'%';}
+boxes.forEach(x=>x.addEventListener('change',update));update();
+})();
+</script>
+<script src="script.js"></script>
+</body></html>
