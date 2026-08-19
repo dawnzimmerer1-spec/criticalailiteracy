@@ -136,7 +136,115 @@
     @media (max-width: 640px) {
       .matrix-controls { grid-template-columns: 1fr; }
     }
-  </style>
+  
+    .dimension-methodology {
+      margin: 1.5rem 0 1rem;
+      padding: 1.35rem 1.5rem;
+      border: 1px solid rgba(22,38,58,.14);
+      border-radius: 1rem;
+      background: rgba(255,255,255,.78);
+    }
+    .dimension-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .65rem 1.25rem;
+      margin: 1rem 0 1.25rem;
+      font-size: .92rem;
+    }
+    .dimension-legend span { display: inline-flex; align-items: center; gap: .4rem; }
+    .dimension-symbol {
+      display: inline-grid;
+      place-items: center;
+      min-width: 1.4rem;
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .dimension-symbol.central { color: #5b2d79; }
+    .dimension-symbol.present { color: #0d5c55; }
+    .dimension-symbol.limited { color: #8a6300; }
+    .dimension-symbol.absent { color: #7a828a; }
+    .dimension-controls {
+      display: grid;
+      grid-template-columns: minmax(14rem, 1fr) minmax(14rem, 1fr) auto;
+      gap: .9rem;
+      align-items: end;
+      margin: 1.25rem 0 .7rem;
+    }
+    .dimension-controls label {
+      display: grid;
+      gap: .4rem;
+      font-size: .9rem;
+      font-weight: 700;
+    }
+    .dimension-controls select {
+      width: 100%;
+      min-height: 2.75rem;
+      padding: .65rem .75rem;
+      border: 1px solid rgba(22,38,58,.22);
+      border-radius: .65rem;
+      background: #fff;
+      color: inherit;
+      font: inherit;
+    }
+    .dimension-count {
+      margin: .45rem 0 .9rem;
+      color: var(--muted, #5d6874);
+      font-size: .95rem;
+    }
+    .dimension-wrap {
+      overflow-x: auto;
+      border: 1px solid rgba(22,38,58,.14);
+      border-radius: 1rem;
+      background: #fff;
+      box-shadow: 0 14px 34px rgba(22,38,58,.07);
+    }
+    .dimension-matrix {
+      width: 100%;
+      min-width: 1320px;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: .9rem;
+    }
+    .dimension-matrix th,
+    .dimension-matrix td {
+      padding: .78rem .58rem;
+      border-bottom: 1px solid rgba(22,38,58,.1);
+      border-right: 1px solid rgba(22,38,58,.06);
+      text-align: center;
+      vertical-align: middle;
+    }
+    .dimension-matrix thead th {
+      background: #16263a;
+      color: #fff;
+      font-size: .77rem;
+      line-height: 1.25;
+      vertical-align: bottom;
+    }
+    .dimension-matrix .framework-col,
+    .dimension-matrix tbody th {
+      width: 260px;
+      min-width: 260px;
+      text-align: left;
+    }
+    .dimension-matrix tbody th {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      background: #fff;
+      font-weight: 700;
+    }
+    .dimension-matrix tbody tr:hover td,
+    .dimension-matrix tbody tr:hover th { background: #f7faf9; }
+    .dimension-matrix [data-focus="true"] { background: #eef7f5 !important; }
+    .dimension-matrix thead [data-focus="true"] { background: #214c4a !important; }
+    .dimension-notes { margin-top: 1rem; }
+    @media (max-width: 760px) {
+      .dimension-controls { grid-template-columns: 1fr; }
+      .dimension-controls .button { width: 100%; }
+    }
+
+</style>
 
 </head>
 <body>
@@ -452,8 +560,240 @@
         </div>
 
         <div class="resource-grid matrix-followups">
-          <article class="resource-card"><p class="label">Next layer</p><h3>Critical dimensions index</h3><p>A crosswalk showing how frameworks address bias, power, privacy, surveillance, labor, equity, accessibility, environmental impact, epistemic authority, verification, transparency, and agency.</p><a href="#project">In development →</a></article>
+          <article class="resource-card"><p class="label">Next layer</p><h3>Critical dimensions index</h3><p>A crosswalk showing how frameworks address bias, power, privacy, surveillance, labor, equity, accessibility, environmental impact, epistemic authority, verification, transparency, and agency.</p><a href="#critical-dimensions">Explore the index →</a></article>
           <article class="resource-card"><p class="label">Research library</p><h3>Selected scholarship</h3><p>A curated and annotated collection of research for instructors, librarians, students, and researchers who need more than an undifferentiated bibliography.</p><a href="#research">Explore the research plan →</a></article>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section tinted" id="critical-dimensions">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Critical Dimensions Index</p>
+            <h2>Which critical questions does each framework actually address?</h2>
+          </div>
+          <p>The comparison matrix describes the overall shape of each framework. This crosswalk looks inside the frameworks, showing how strongly twelve critical dimensions appear in their concepts, competencies, learning outcomes, or recommended practices.</p>
+        </div>
+
+        <div class="dimension-methodology prose">
+          <h3>How the index is scored</h3>
+          <p><strong>Central</strong> means the dimension is a substantial and recurring part of the framework. <strong>Present</strong> means it is meaningfully addressed but is not one of the framework's organizing concerns. <strong>Limited</strong> means it appears briefly, indirectly, or mainly as part of a broader ethical discussion. <strong>Not evident</strong> means it was not identified as a meaningful element in the framework materials reviewed for this version of the index.</p>
+          <p class="note"><strong>Not evident does not mean disproven or unimportant.</strong> It means the dimension was not sufficiently visible in the reviewed framework text to justify a stronger classification. Scores describe emphasis, not quality.</p>
+        </div>
+
+        <div class="dimension-legend" aria-label="Critical Dimensions Index legend">
+          <span><strong class="dimension-symbol central" aria-hidden="true">●</strong> Central</span>
+          <span><strong class="dimension-symbol present" aria-hidden="true">◐</strong> Present</span>
+          <span><strong class="dimension-symbol limited" aria-hidden="true">○</strong> Limited</span>
+          <span><strong class="dimension-symbol absent" aria-hidden="true">—</strong> Not evident</span>
+        </div>
+
+        <div class="dimension-controls" aria-label="Critical dimensions filters">
+          <label>
+            Focus on a dimension
+            <select id="dimension-focus">
+              <option value="">Show all dimensions</option>
+              <option value="bias">Bias</option>
+              <option value="power">Power</option>
+              <option value="privacy">Privacy</option>
+              <option value="surveillance">Surveillance</option>
+              <option value="labor">Labor</option>
+              <option value="equity">Equity</option>
+              <option value="accessibility">Accessibility</option>
+              <option value="environment">Environmental impact</option>
+              <option value="epistemic">Epistemic authority</option>
+              <option value="verification">Verification</option>
+              <option value="transparency">Transparency</option>
+              <option value="agency">Human agency</option>
+            </select>
+          </label>
+          <label>
+            Minimum attention
+            <select id="dimension-minimum">
+              <option value="0">Show every framework</option>
+              <option value="1">Limited or stronger</option>
+              <option value="2">Present or stronger</option>
+              <option value="3">Central only</option>
+            </select>
+          </label>
+          <button class="button secondary" id="dimension-reset" type="button">Reset index</button>
+        </div>
+
+        <p class="dimension-count" aria-live="polite"><span id="dimension-framework-count">9</span> frameworks shown</p>
+
+        <div class="dimension-wrap" tabindex="0" aria-label="Scrollable critical dimensions comparison table">
+          <table class="dimension-matrix" id="dimension-matrix">
+            <caption class="sr-only">Critical Dimensions Index for nine AI literacy and critical AI literacy frameworks.</caption>
+            <thead>
+              <tr>
+                <th scope="col" class="framework-col">Framework</th>
+                <th scope="col" data-dimension="bias">Bias</th>
+                <th scope="col" data-dimension="power">Power</th>
+                <th scope="col" data-dimension="privacy">Privacy</th>
+                <th scope="col" data-dimension="surveillance">Surveillance</th>
+                <th scope="col" data-dimension="labor">Labor</th>
+                <th scope="col" data-dimension="equity">Equity</th>
+                <th scope="col" data-dimension="accessibility">Accessibility</th>
+                <th scope="col" data-dimension="environment">Environment</th>
+                <th scope="col" data-dimension="epistemic">Epistemic authority</th>
+                <th scope="col" data-dimension="verification">Verification</th>
+                <th scope="col" data-dimension="transparency">Transparency</th>
+                <th scope="col" data-dimension="agency">Human agency</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-bias="2" data-power="1" data-privacy="2" data-surveillance="1" data-labor="1" data-equity="2" data-accessibility="2" data-environment="2" data-epistemic="1" data-verification="2" data-transparency="2" data-agency="3">
+                <th scope="row">UNESCO AI Competency Framework for Students</th>
+                <td data-dimension="bias"><span class="dimension-symbol present" title="Present" aria-label="Bias: Present">◐</span></td>
+                <td data-dimension="power"><span class="dimension-symbol limited" title="Limited" aria-label="Power: Limited">○</span></td>
+                <td data-dimension="privacy"><span class="dimension-symbol present" title="Present" aria-label="Privacy: Present">◐</span></td>
+                <td data-dimension="surveillance"><span class="dimension-symbol limited" title="Limited" aria-label="Surveillance: Limited">○</span></td>
+                <td data-dimension="labor"><span class="dimension-symbol limited" title="Limited" aria-label="Labor: Limited">○</span></td>
+                <td data-dimension="equity"><span class="dimension-symbol present" title="Present" aria-label="Equity: Present">◐</span></td>
+                <td data-dimension="accessibility"><span class="dimension-symbol present" title="Present" aria-label="Accessibility: Present">◐</span></td>
+                <td data-dimension="environment"><span class="dimension-symbol present" title="Present" aria-label="Environmental impact: Present">◐</span></td>
+                <td data-dimension="epistemic"><span class="dimension-symbol limited" title="Limited" aria-label="Epistemic authority: Limited">○</span></td>
+                <td data-dimension="verification"><span class="dimension-symbol present" title="Present" aria-label="Verification: Present">◐</span></td>
+                <td data-dimension="transparency"><span class="dimension-symbol present" title="Present" aria-label="Transparency: Present">◐</span></td>
+                <td data-dimension="agency"><span class="dimension-symbol central" title="Central" aria-label="Human agency: Central">●</span></td>
+              </tr>
+
+              <tr data-bias="2" data-power="1" data-privacy="3" data-surveillance="1" data-labor="2" data-equity="3" data-accessibility="2" data-environment="2" data-epistemic="2" data-verification="2" data-transparency="2" data-agency="3">
+                <th scope="row">UNESCO AI Competency Framework for Teachers</th>
+                <td data-dimension="bias"><span class="dimension-symbol present" title="Present" aria-label="Bias: Present">◐</span></td>
+                <td data-dimension="power"><span class="dimension-symbol limited" title="Limited" aria-label="Power: Limited">○</span></td>
+                <td data-dimension="privacy"><span class="dimension-symbol central" title="Central" aria-label="Privacy: Central">●</span></td>
+                <td data-dimension="surveillance"><span class="dimension-symbol limited" title="Limited" aria-label="Surveillance: Limited">○</span></td>
+                <td data-dimension="labor"><span class="dimension-symbol present" title="Present" aria-label="Labor: Present">◐</span></td>
+                <td data-dimension="equity"><span class="dimension-symbol central" title="Central" aria-label="Equity: Central">●</span></td>
+                <td data-dimension="accessibility"><span class="dimension-symbol present" title="Present" aria-label="Accessibility: Present">◐</span></td>
+                <td data-dimension="environment"><span class="dimension-symbol present" title="Present" aria-label="Environmental impact: Present">◐</span></td>
+                <td data-dimension="epistemic"><span class="dimension-symbol present" title="Present" aria-label="Epistemic authority: Present">◐</span></td>
+                <td data-dimension="verification"><span class="dimension-symbol present" title="Present" aria-label="Verification: Present">◐</span></td>
+                <td data-dimension="transparency"><span class="dimension-symbol present" title="Present" aria-label="Transparency: Present">◐</span></td>
+                <td data-dimension="agency"><span class="dimension-symbol central" title="Central" aria-label="Human agency: Central">●</span></td>
+              </tr>
+
+              <tr data-bias="2" data-power="1" data-privacy="3" data-surveillance="0" data-labor="1" data-equity="2" data-accessibility="1" data-environment="1" data-epistemic="1" data-verification="2" data-transparency="3" data-agency="2">
+                <th scope="row">Chan AI Ecological Education Policy Framework</th>
+                <td data-dimension="bias"><span class="dimension-symbol present" title="Present" aria-label="Bias: Present">◐</span></td>
+                <td data-dimension="power"><span class="dimension-symbol limited" title="Limited" aria-label="Power: Limited">○</span></td>
+                <td data-dimension="privacy"><span class="dimension-symbol central" title="Central" aria-label="Privacy: Central">●</span></td>
+                <td data-dimension="surveillance"><span class="dimension-symbol absent" title="Not evident" aria-label="Surveillance: Not evident">—</span></td>
+                <td data-dimension="labor"><span class="dimension-symbol limited" title="Limited" aria-label="Labor: Limited">○</span></td>
+                <td data-dimension="equity"><span class="dimension-symbol present" title="Present" aria-label="Equity: Present">◐</span></td>
+                <td data-dimension="accessibility"><span class="dimension-symbol limited" title="Limited" aria-label="Accessibility: Limited">○</span></td>
+                <td data-dimension="environment"><span class="dimension-symbol limited" title="Limited" aria-label="Environmental impact: Limited">○</span></td>
+                <td data-dimension="epistemic"><span class="dimension-symbol limited" title="Limited" aria-label="Epistemic authority: Limited">○</span></td>
+                <td data-dimension="verification"><span class="dimension-symbol present" title="Present" aria-label="Verification: Present">◐</span></td>
+                <td data-dimension="transparency"><span class="dimension-symbol central" title="Central" aria-label="Transparency: Central">●</span></td>
+                <td data-dimension="agency"><span class="dimension-symbol present" title="Present" aria-label="Human agency: Present">◐</span></td>
+              </tr>
+
+              <tr data-bias="2" data-power="1" data-privacy="3" data-surveillance="0" data-labor="1" data-equity="1" data-accessibility="1" data-environment="0" data-epistemic="1" data-verification="2" data-transparency="1" data-agency="2">
+                <th scope="row">Lo Academic Library AI Literacy Framework</th>
+                <td data-dimension="bias"><span class="dimension-symbol present" title="Present" aria-label="Bias: Present">◐</span></td>
+                <td data-dimension="power"><span class="dimension-symbol limited" title="Limited" aria-label="Power: Limited">○</span></td>
+                <td data-dimension="privacy"><span class="dimension-symbol central" title="Central" aria-label="Privacy: Central">●</span></td>
+                <td data-dimension="surveillance"><span class="dimension-symbol absent" title="Not evident" aria-label="Surveillance: Not evident">—</span></td>
+                <td data-dimension="labor"><span class="dimension-symbol limited" title="Limited" aria-label="Labor: Limited">○</span></td>
+                <td data-dimension="equity"><span class="dimension-symbol limited" title="Limited" aria-label="Equity: Limited">○</span></td>
+                <td data-dimension="accessibility"><span class="dimension-symbol limited" title="Limited" aria-label="Accessibility: Limited">○</span></td>
+                <td data-dimension="environment"><span class="dimension-symbol absent" title="Not evident" aria-label="Environmental impact: Not evident">—</span></td>
+                <td data-dimension="epistemic"><span class="dimension-symbol limited" title="Limited" aria-label="Epistemic authority: Limited">○</span></td>
+                <td data-dimension="verification"><span class="dimension-symbol present" title="Present" aria-label="Verification: Present">◐</span></td>
+                <td data-dimension="transparency"><span class="dimension-symbol limited" title="Limited" aria-label="Transparency: Limited">○</span></td>
+                <td data-dimension="agency"><span class="dimension-symbol present" title="Present" aria-label="Human agency: Present">◐</span></td>
+              </tr>
+
+              <tr data-bias="2" data-power="1" data-privacy="2" data-surveillance="0" data-labor="0" data-equity="1" data-accessibility="0" data-environment="0" data-epistemic="1" data-verification="3" data-transparency="1" data-agency="3">
+                <th scope="row">Park GenAI Literacy Framework</th>
+                <td data-dimension="bias"><span class="dimension-symbol present" title="Present" aria-label="Bias: Present">◐</span></td>
+                <td data-dimension="power"><span class="dimension-symbol limited" title="Limited" aria-label="Power: Limited">○</span></td>
+                <td data-dimension="privacy"><span class="dimension-symbol present" title="Present" aria-label="Privacy: Present">◐</span></td>
+                <td data-dimension="surveillance"><span class="dimension-symbol absent" title="Not evident" aria-label="Surveillance: Not evident">—</span></td>
+                <td data-dimension="labor"><span class="dimension-symbol absent" title="Not evident" aria-label="Labor: Not evident">—</span></td>
+                <td data-dimension="equity"><span class="dimension-symbol limited" title="Limited" aria-label="Equity: Limited">○</span></td>
+                <td data-dimension="accessibility"><span class="dimension-symbol absent" title="Not evident" aria-label="Accessibility: Not evident">—</span></td>
+                <td data-dimension="environment"><span class="dimension-symbol absent" title="Not evident" aria-label="Environmental impact: Not evident">—</span></td>
+                <td data-dimension="epistemic"><span class="dimension-symbol limited" title="Limited" aria-label="Epistemic authority: Limited">○</span></td>
+                <td data-dimension="verification"><span class="dimension-symbol central" title="Central" aria-label="Verification: Central">●</span></td>
+                <td data-dimension="transparency"><span class="dimension-symbol limited" title="Limited" aria-label="Transparency: Limited">○</span></td>
+                <td data-dimension="agency"><span class="dimension-symbol central" title="Central" aria-label="Human agency: Central">●</span></td>
+              </tr>
+
+              <tr data-bias="3" data-power="3" data-privacy="2" data-surveillance="2" data-labor="2" data-equity="3" data-accessibility="1" data-environment="2" data-epistemic="3" data-verification="1" data-transparency="2" data-agency="3">
+                <th scope="row">Veldhuis et al. Critical AI Literacy Framework</th>
+                <td data-dimension="bias"><span class="dimension-symbol central" title="Central" aria-label="Bias: Central">●</span></td>
+                <td data-dimension="power"><span class="dimension-symbol central" title="Central" aria-label="Power: Central">●</span></td>
+                <td data-dimension="privacy"><span class="dimension-symbol present" title="Present" aria-label="Privacy: Present">◐</span></td>
+                <td data-dimension="surveillance"><span class="dimension-symbol present" title="Present" aria-label="Surveillance: Present">◐</span></td>
+                <td data-dimension="labor"><span class="dimension-symbol present" title="Present" aria-label="Labor: Present">◐</span></td>
+                <td data-dimension="equity"><span class="dimension-symbol central" title="Central" aria-label="Equity: Central">●</span></td>
+                <td data-dimension="accessibility"><span class="dimension-symbol limited" title="Limited" aria-label="Accessibility: Limited">○</span></td>
+                <td data-dimension="environment"><span class="dimension-symbol present" title="Present" aria-label="Environmental impact: Present">◐</span></td>
+                <td data-dimension="epistemic"><span class="dimension-symbol central" title="Central" aria-label="Epistemic authority: Central">●</span></td>
+                <td data-dimension="verification"><span class="dimension-symbol limited" title="Limited" aria-label="Verification: Limited">○</span></td>
+                <td data-dimension="transparency"><span class="dimension-symbol present" title="Present" aria-label="Transparency: Present">◐</span></td>
+                <td data-dimension="agency"><span class="dimension-symbol central" title="Central" aria-label="Human agency: Central">●</span></td>
+              </tr>
+
+              <tr data-bias="3" data-power="3" data-privacy="2" data-surveillance="1" data-labor="3" data-equity="3" data-accessibility="3" data-environment="3" data-epistemic="3" data-verification="3" data-transparency="3" data-agency="3">
+                <th scope="row">Open University Critical AI Literacy Framework</th>
+                <td data-dimension="bias"><span class="dimension-symbol central" title="Central" aria-label="Bias: Central">●</span></td>
+                <td data-dimension="power"><span class="dimension-symbol central" title="Central" aria-label="Power: Central">●</span></td>
+                <td data-dimension="privacy"><span class="dimension-symbol present" title="Present" aria-label="Privacy: Present">◐</span></td>
+                <td data-dimension="surveillance"><span class="dimension-symbol limited" title="Limited" aria-label="Surveillance: Limited">○</span></td>
+                <td data-dimension="labor"><span class="dimension-symbol central" title="Central" aria-label="Labor: Central">●</span></td>
+                <td data-dimension="equity"><span class="dimension-symbol central" title="Central" aria-label="Equity: Central">●</span></td>
+                <td data-dimension="accessibility"><span class="dimension-symbol central" title="Central" aria-label="Accessibility: Central">●</span></td>
+                <td data-dimension="environment"><span class="dimension-symbol central" title="Central" aria-label="Environmental impact: Central">●</span></td>
+                <td data-dimension="epistemic"><span class="dimension-symbol central" title="Central" aria-label="Epistemic authority: Central">●</span></td>
+                <td data-dimension="verification"><span class="dimension-symbol central" title="Central" aria-label="Verification: Central">●</span></td>
+                <td data-dimension="transparency"><span class="dimension-symbol central" title="Central" aria-label="Transparency: Central">●</span></td>
+                <td data-dimension="agency"><span class="dimension-symbol central" title="Central" aria-label="Human agency: Central">●</span></td>
+              </tr>
+
+              <tr data-bias="3" data-power="3" data-privacy="2" data-surveillance="1" data-labor="3" data-equity="3" data-accessibility="2" data-environment="3" data-epistemic="3" data-verification="2" data-transparency="2" data-agency="3">
+                <th scope="row">Conrad &amp; Kamperman Critical AI Literacy Approach</th>
+                <td data-dimension="bias"><span class="dimension-symbol central" title="Central" aria-label="Bias: Central">●</span></td>
+                <td data-dimension="power"><span class="dimension-symbol central" title="Central" aria-label="Power: Central">●</span></td>
+                <td data-dimension="privacy"><span class="dimension-symbol present" title="Present" aria-label="Privacy: Present">◐</span></td>
+                <td data-dimension="surveillance"><span class="dimension-symbol limited" title="Limited" aria-label="Surveillance: Limited">○</span></td>
+                <td data-dimension="labor"><span class="dimension-symbol central" title="Central" aria-label="Labor: Central">●</span></td>
+                <td data-dimension="equity"><span class="dimension-symbol central" title="Central" aria-label="Equity: Central">●</span></td>
+                <td data-dimension="accessibility"><span class="dimension-symbol present" title="Present" aria-label="Accessibility: Present">◐</span></td>
+                <td data-dimension="environment"><span class="dimension-symbol central" title="Central" aria-label="Environmental impact: Central">●</span></td>
+                <td data-dimension="epistemic"><span class="dimension-symbol central" title="Central" aria-label="Epistemic authority: Central">●</span></td>
+                <td data-dimension="verification"><span class="dimension-symbol present" title="Present" aria-label="Verification: Present">◐</span></td>
+                <td data-dimension="transparency"><span class="dimension-symbol present" title="Present" aria-label="Transparency: Present">◐</span></td>
+                <td data-dimension="agency"><span class="dimension-symbol central" title="Central" aria-label="Human agency: Central">●</span></td>
+              </tr>
+
+              <tr data-bias="3" data-power="2" data-privacy="2" data-surveillance="2" data-labor="3" data-equity="3" data-accessibility="3" data-environment="3" data-epistemic="3" data-verification="3" data-transparency="3" data-agency="3">
+                <th scope="row">Zhang et al. CAIL + RACBAC</th>
+                <td data-dimension="bias"><span class="dimension-symbol central" title="Central" aria-label="Bias: Central">●</span></td>
+                <td data-dimension="power"><span class="dimension-symbol present" title="Present" aria-label="Power: Present">◐</span></td>
+                <td data-dimension="privacy"><span class="dimension-symbol present" title="Present" aria-label="Privacy: Present">◐</span></td>
+                <td data-dimension="surveillance"><span class="dimension-symbol present" title="Present" aria-label="Surveillance: Present">◐</span></td>
+                <td data-dimension="labor"><span class="dimension-symbol central" title="Central" aria-label="Labor: Central">●</span></td>
+                <td data-dimension="equity"><span class="dimension-symbol central" title="Central" aria-label="Equity: Central">●</span></td>
+                <td data-dimension="accessibility"><span class="dimension-symbol central" title="Central" aria-label="Accessibility: Central">●</span></td>
+                <td data-dimension="environment"><span class="dimension-symbol central" title="Central" aria-label="Environmental impact: Central">●</span></td>
+                <td data-dimension="epistemic"><span class="dimension-symbol central" title="Central" aria-label="Epistemic authority: Central">●</span></td>
+                <td data-dimension="verification"><span class="dimension-symbol central" title="Central" aria-label="Verification: Central">●</span></td>
+                <td data-dimension="transparency"><span class="dimension-symbol central" title="Central" aria-label="Transparency: Central">●</span></td>
+                <td data-dimension="agency"><span class="dimension-symbol central" title="Central" aria-label="Human agency: Central">●</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dimension-notes prose">
+          <p><strong>Reading the pattern:</strong> Operational and competency-oriented frameworks tend to give greater weight to privacy, verification, responsible use, and human agency. Explicitly critical frameworks more often foreground power, labor, equity, environmental consequences, accessibility, and epistemic authority. Neither pattern makes one family universally superior; it shows that frameworks are built to answer different educational and institutional questions.</p>
+          <p><strong>Version note:</strong> These ratings are provisional and will be reviewed as individual framework profiles and source annotations are added. Changes to classifications should be documented rather than silently overwritten.</p>
         </div>
       </div>
     </section>
@@ -625,6 +965,54 @@
 
           sorted.forEach(row => tbody.appendChild(row));
         });
+      });
+    })();
+  </script>
+
+
+  <script>
+    (() => {
+      const table = document.getElementById('dimension-matrix');
+      if (!table) return;
+
+      const focus = document.getElementById('dimension-focus');
+      const minimum = document.getElementById('dimension-minimum');
+      const reset = document.getElementById('dimension-reset');
+      const count = document.getElementById('dimension-framework-count');
+      const rows = Array.from(table.tBodies[0].rows);
+      const dimensionCells = Array.from(table.querySelectorAll('[data-dimension]'));
+
+      function updateIndex() {
+        const dimension = focus.value;
+        const min = Number(minimum.value || 0);
+        let visible = 0;
+
+        dimensionCells.forEach(cell => {
+          cell.removeAttribute('data-focus');
+          if (dimension && cell.dataset.dimension === dimension) {
+            cell.setAttribute('data-focus', 'true');
+          }
+        });
+
+        rows.forEach(row => {
+          let show = true;
+          if (dimension && min > 0) {
+            show = Number(row.dataset[dimension] || 0) >= min;
+          }
+          row.hidden = !show;
+          if (show) visible++;
+        });
+
+        count.textContent = visible;
+      }
+
+      focus.addEventListener('change', updateIndex);
+      minimum.addEventListener('change', updateIndex);
+      reset.addEventListener('click', () => {
+        focus.value = '';
+        minimum.value = '0';
+        updateIndex();
+        focus.focus();
       });
     })();
   </script>
