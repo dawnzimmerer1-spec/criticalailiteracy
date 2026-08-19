@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Prompt-to-Verification Ladder for moving from AI-generated output to evidence-based research judgment.">
+<title>Prompt-to-Verification Ladder | Critical AI Literacy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+<style>
+.page-hero{padding:4rem 0 2.5rem;background:linear-gradient(180deg,#f6f2e9 0%,#fff 100%)}
+.breadcrumbs{font-size:.9rem;margin-bottom:1.2rem}.breadcrumbs a{color:inherit}
+.tool-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,.8fr);gap:2.5rem;align-items:start}
+.tool-sidebar{position:sticky;top:6rem}
+.tool-sidebar .box{padding:1.15rem;border:1px solid rgba(22,38,58,.12);border-radius:1rem;background:#fff;margin-bottom:1rem}
+.decision-tree{display:grid;gap:1rem}
+.decision-node{padding:1.2rem 1.3rem;border:1px solid rgba(22,38,58,.14);border-radius:1rem;background:#fff}
+.decision-node h2{font-size:1.2rem;margin:.1rem 0 .5rem}
+.decision-node .qnum{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-weight:800;color:#3f756f}
+.answer-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.8rem}
+.answer{padding:.9rem;border-radius:.8rem;background:#f7faf9}
+.answer strong{display:block;margin-bottom:.25rem}
+.answer.yes{border-left:4px solid #3f756f}.answer.no{border-left:4px solid #9b6b53}
+.outcome{padding:1.2rem;border-radius:1rem;margin-top:1rem}
+.outcome.allow{background:#eaf6f3}.outcome.limit{background:#fff6df}.outcome.avoid{background:#f6e9e5}
+.ladder{display:grid;gap:1rem}
+.rung{display:grid;grid-template-columns:70px 1fr;gap:1rem;align-items:start;padding:1.15rem;border:1px solid rgba(22,38,58,.12);border-radius:1rem;background:#fff}
+.rung-num{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:#16263a;color:#fff;font-weight:800}
+.rung h2{font-size:1.2rem;margin:.05rem 0 .35rem}
+.prompt-box{padding:.8rem 1rem;border-radius:.75rem;background:#f7faf9;border-left:4px solid #3f756f;margin:.7rem 0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9rem}
+.check-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
+.check-card{padding:.9rem;border:1px solid rgba(22,38,58,.1);border-radius:.8rem;background:#fff}
+.resource-callout{padding:1.2rem 1.4rem;border-radius:1rem;background:#16263a;color:#fff}
+.resource-callout a{color:#fff}
+.print-note{font-size:.88rem;color:#68737c}
+@media(max-width:900px){.tool-layout{grid-template-columns:1fr}.tool-sidebar{position:static}}
+@media(max-width:650px){.answer-grid,.check-grid{grid-template-columns:1fr}.rung{grid-template-columns:1fr}.rung-num{width:44px;height:44px}}
+@media print{header,footer,.tool-sidebar,.breadcrumbs{display:none!important}.page-hero{padding:1rem 0}.decision-node,.rung{break-inside:avoid}}
+</style>
+</head>
+<body><a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header"><div class="shell nav-wrap"><a class="brand" href="index.html"><span class="brand-mark">CAIL</span><span class="brand-text">Critical AI Literacy</span></a><nav class="site-nav"><a href="index.html#teaching">Teaching</a><a href="ai-use-decision-tree.html">Decision Tree</a><a href="prompt-verification-ladder.html" aria-current="page">Verification Ladder</a></nav></div></header>
+<main id="main">
+<section class="page-hero"><div class="shell"><p class="breadcrumbs"><a href="index.html">Home</a> / Teaching / Prompt-to-Verification Ladder</p><p class="eyebrow">Teaching Resource</p><h1>Prompt-to-Verification Ladder</h1><p class="lede">A six-rung process that turns an AI response from a polished blob of text into a set of claims you can test, source, revise, or reject.</p></div></section>
+<section class="section"><div class="shell tool-layout">
+<article>
+<p class="print-note">Use the ladder with any generative AI tool. The point is the workflow, not the brand.</p>
+<div class="ladder">
+<section class="rung"><div class="rung-num">1</div><div><p class="label">Clarify</p><h2>Define the question before prompting</h2><p>Write down what you actually need to know, what kind of evidence would count, and what constraints matter.</p><div class="prompt-box">Example: “Identify three major explanations for declining voter turnout among young adults in the U.S. since 2016. Distinguish claims from speculation.”</div></div></section>
+
+<section class="rung"><div class="rung-num">2</div><div><p class="label">Generate</p><h2>Ask for a useful starting point, not the final answer</h2><p>Use AI to surface possible concepts, vocabulary, counterarguments, or directions. Treat the response as a hypothesis generator.</p><div class="prompt-box">“Give me possible explanations, key terms I should search, and questions I should investigate. Do not invent citations.”</div></div></section>
+
+<section class="rung"><div class="rung-num">3</div><div><p class="label">Extract</p><h2>Separate the response into checkable claims</h2><p>Underline or list every factual, causal, statistical, historical, or interpretive claim that would need support.</p><div class="check-grid"><div class="check-card"><strong>Claim</strong><p>What is the AI asking you to believe?</p></div><div class="check-card"><strong>Evidence needed</strong><p>What kind of source would actually support it?</p></div></div></div></section>
+
+<section class="rung"><div class="rung-num">4</div><div><p class="label">Verify</p><h2>Leave the AI response and search independently</h2><p>Use library databases, primary sources, official data, scholarly literature, or other sources appropriate to the question.</p><div class="check-grid"><div class="check-card"><strong>Existence</strong><p>Does the cited or implied source actually exist?</p></div><div class="check-card"><strong>Match</strong><p>Does it support the specific claim?</p></div><div class="check-card"><strong>Authority</strong><p>Is it appropriate for this question?</p></div><div class="check-card"><strong>Currency</strong><p>Is it current enough for the topic?</p></div></div></div></section>
+
+<section class="rung"><div class="rung-num">5</div><div><p class="label">Interrogate</p><h2>Look for what the response leaves out</h2><p>Ask about uncertainty, disagreement, missing perspectives, bias, power, context, and consequences.</p><div class="prompt-box">“What important perspectives or counterevidence might be missing from this explanation? Which groups or assumptions should I investigate separately?”</div></div></section>
+
+<section class="rung"><div class="rung-num">6</div><div><p class="label">Decide</p><h2>Keep, revise, or reject</h2><p>After checking the evidence, decide what survives. Replace unsupported claims with sourced material, revise oversimplified reasoning, and reject anything that cannot be defended.</p><div class="check-grid"><div class="check-card"><strong>Keep</strong><p>Supported, relevant, and appropriate.</p></div><div class="check-card"><strong>Revise</strong><p>Partly supported or missing needed context.</p></div><div class="check-card"><strong>Reject</strong><p>Unsupported, fabricated, misleading, or inappropriate.</p></div><div class="check-card"><strong>Disclose</strong><p>Explain how AI contributed when required or useful.</p></div></div></div></section>
+</div>
+
+<div class="resource-callout"><h2>The ladder changes the center of gravity.</h2><p>The AI output is not the evidence. It is the beginning of a research process that returns authority to sources, context, and human judgment.</p></div>
+</article>
+<aside class="tool-sidebar">
+<div class="box"><p class="label">Best used for</p><p>Research questions, literature searching, argument development, source checking, and classroom exercises on hallucination or verification.</p></div>
+<div class="box"><p class="label">Fast classroom version</p><p>Have students bring one AI-generated claim and complete Rungs 3–6 in pairs.</p></div>
+<div class="box"><p class="label">Related resource</p><a href="ai-use-decision-tree.html">AI Use Decision Tree →</a></div>
+</aside>
+</div></section></main>
+<footer class="site-footer"><div class="shell footer-grid"><div><strong>Critical AI Literacy</strong><p>Research, teaching, and practice for higher education.</p></div><div><a href="index.html#teaching">Back to Teaching Resources →</a></div></div></footer><script src="script.js"></script></body></html>

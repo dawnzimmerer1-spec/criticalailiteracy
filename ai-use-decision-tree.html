@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="AI Use Decision Tree for deciding whether, when, and how generative AI belongs in an academic task.">
+<title>AI Use Decision Tree | Critical AI Literacy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+<style>
+.page-hero{padding:4rem 0 2.5rem;background:linear-gradient(180deg,#f6f2e9 0%,#fff 100%)}
+.breadcrumbs{font-size:.9rem;margin-bottom:1.2rem}.breadcrumbs a{color:inherit}
+.tool-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,.8fr);gap:2.5rem;align-items:start}
+.tool-sidebar{position:sticky;top:6rem}
+.tool-sidebar .box{padding:1.15rem;border:1px solid rgba(22,38,58,.12);border-radius:1rem;background:#fff;margin-bottom:1rem}
+.decision-tree{display:grid;gap:1rem}
+.decision-node{padding:1.2rem 1.3rem;border:1px solid rgba(22,38,58,.14);border-radius:1rem;background:#fff}
+.decision-node h2{font-size:1.2rem;margin:.1rem 0 .5rem}
+.decision-node .qnum{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-weight:800;color:#3f756f}
+.answer-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.8rem}
+.answer{padding:.9rem;border-radius:.8rem;background:#f7faf9}
+.answer strong{display:block;margin-bottom:.25rem}
+.answer.yes{border-left:4px solid #3f756f}.answer.no{border-left:4px solid #9b6b53}
+.outcome{padding:1.2rem;border-radius:1rem;margin-top:1rem}
+.outcome.allow{background:#eaf6f3}.outcome.limit{background:#fff6df}.outcome.avoid{background:#f6e9e5}
+.ladder{display:grid;gap:1rem}
+.rung{display:grid;grid-template-columns:70px 1fr;gap:1rem;align-items:start;padding:1.15rem;border:1px solid rgba(22,38,58,.12);border-radius:1rem;background:#fff}
+.rung-num{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:#16263a;color:#fff;font-weight:800}
+.rung h2{font-size:1.2rem;margin:.05rem 0 .35rem}
+.prompt-box{padding:.8rem 1rem;border-radius:.75rem;background:#f7faf9;border-left:4px solid #3f756f;margin:.7rem 0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9rem}
+.check-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
+.check-card{padding:.9rem;border:1px solid rgba(22,38,58,.1);border-radius:.8rem;background:#fff}
+.resource-callout{padding:1.2rem 1.4rem;border-radius:1rem;background:#16263a;color:#fff}
+.resource-callout a{color:#fff}
+.print-note{font-size:.88rem;color:#68737c}
+@media(max-width:900px){.tool-layout{grid-template-columns:1fr}.tool-sidebar{position:static}}
+@media(max-width:650px){.answer-grid,.check-grid{grid-template-columns:1fr}.rung{grid-template-columns:1fr}.rung-num{width:44px;height:44px}}
+@media print{header,footer,.tool-sidebar,.breadcrumbs{display:none!important}.page-hero{padding:1rem 0}.decision-node,.rung{break-inside:avoid}}
+</style>
+</head>
+<body><a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header"><div class="shell nav-wrap"><a class="brand" href="index.html"><span class="brand-mark">CAIL</span><span class="brand-text">Critical AI Literacy</span></a><nav class="site-nav"><a href="index.html#teaching">Teaching</a><a href="ai-use-decision-tree.html" aria-current="page">Decision Tree</a><a href="prompt-verification-ladder.html">Verification Ladder</a></nav></div></header>
+<main id="main">
+<section class="page-hero"><div class="shell"><p class="breadcrumbs"><a href="index.html">Home</a> / Teaching / AI Use Decision Tree</p><p class="eyebrow">Teaching Resource</p><h1>AI Use Decision Tree</h1><p class="lede">A practical sequence for deciding whether generative AI belongs in a task, what role it should play, and what responsibilities remain human.</p></div></section>
+<section class="section"><div class="shell tool-layout">
+<article>
+<p class="print-note">Tip: this page is print-friendly for workshops, handouts, or course modules.</p>
+<div class="decision-tree">
+<section class="decision-node"><p class="qnum">Question 1</p><h2>Is AI use permitted for this task?</h2><p>Check the assignment, syllabus, instructor guidance, institutional policy, professional rules, or research protocol before opening the tool.</p><div class="answer-grid"><div class="answer yes"><strong>Yes or not restricted</strong>Continue to Question 2.</div><div class="answer no"><strong>No or explicitly prohibited</strong>Do not use AI for this task. Use another method.</div></div></section>
+
+<section class="decision-node"><p class="qnum">Question 2</p><h2>Would AI support the learning goal, or bypass it?</h2><p>Ask what you are actually supposed to learn or demonstrate. If AI performs the thinking that the task is designed to assess, it may undermine the purpose of the assignment.</p><div class="answer-grid"><div class="answer yes"><strong>Supports the goal</strong>Continue to Question 3.</div><div class="answer no"><strong>Bypasses the goal</strong>Limit or avoid AI use.</div></div></section>
+
+<section class="decision-node"><p class="qnum">Question 3</p><h2>Does the task involve sensitive, private, proprietary, or protected information?</h2><p>Consider student data, health information, unpublished research, workplace records, client information, copyrighted material, or anything you do not have permission to upload.</p><div class="answer-grid"><div class="answer yes"><strong>Yes</strong>Use an approved system or remove the sensitive material. If neither is possible, do not use AI.</div><div class="answer no"><strong>No</strong>Continue to Question 4.</div></div></section>
+
+<section class="decision-node"><p class="qnum">Question 4</p><h2>Can you independently evaluate the output?</h2><p>AI can sound convincing while being wrong. If you lack the subject knowledge, source access, or time needed to check the output, delegating the task may create more risk than value.</p><div class="answer-grid"><div class="answer yes"><strong>Yes</strong>Continue to Question 5.</div><div class="answer no"><strong>No</strong>Use AI only for low-stakes brainstorming, or choose another approach.</div></div></section>
+
+<section class="decision-node"><p class="qnum">Question 5</p><h2>What role should AI play?</h2><div class="check-grid">
+<div class="check-card"><strong>Brainstorming</strong><p>Generating possibilities, questions, keywords, or alternatives.</p></div>
+<div class="check-card"><strong>Explaining</strong><p>Offering a starting explanation that you will verify elsewhere.</p></div>
+<div class="check-card"><strong>Revising</strong><p>Helping reorganize or clarify work you have already created.</p></div>
+<div class="check-card"><strong>Research support</strong><p>Helping identify search terms or possible directions, never replacing source verification.</p></div>
+</div><p>If the role becomes “produce the answer for me,” return to Question 2.</p></section>
+
+<section class="decision-node"><p class="qnum">Question 6</p><h2>Can you explain and disclose what AI contributed?</h2><p>You should be able to describe what the tool did, what you changed, what you verified, and what decisions remained yours.</p><div class="answer-grid"><div class="answer yes"><strong>Yes</strong>Continue, verify, and disclose appropriately.</div><div class="answer no"><strong>No</strong>Reduce the role of AI until you can account for the work.</div></div></section>
+</div>
+
+<div class="outcome allow"><h2>Use AI with verification</h2><p>The task permits AI, it supports the learning goal, the data are appropriate to share, you can evaluate the output, and you can explain its role.</p></div>
+<div class="outcome limit"><h2>Use AI with limits</h2><p>AI may be useful for brainstorming, explanation, or revision, but not for the central thinking, evidence, or final judgment.</p></div>
+<div class="outcome avoid"><h2>Choose another approach</h2><p>Do not use AI when it is prohibited, exposes protected information, replaces the learning goal, or produces work you cannot independently evaluate.</p></div>
+</article>
+
+<aside class="tool-sidebar">
+<div class="box"><p class="label">Core principle</p><h2>Permission is only the first question.</h2><p>Appropriate use also depends on purpose, privacy, evidence, agency, and accountability.</p></div>
+<div class="box"><p class="label">Use with students</p><p>Ask learners to walk through the tree before beginning an assignment and submit a one-sentence rationale for their AI choice.</p></div>
+<div class="box"><p class="label">Related resource</p><a href="prompt-verification-ladder.html">Prompt-to-Verification Ladder →</a></div>
+</aside>
+</div></section></main>
+<footer class="site-footer"><div class="shell footer-grid"><div><strong>Critical AI Literacy</strong><p>Research, teaching, and practice for higher education.</p></div><div><a href="index.html#teaching">Back to Teaching Resources →</a></div></div></footer><script src="script.js"></script></body></html>
