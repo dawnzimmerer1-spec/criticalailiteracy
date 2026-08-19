@@ -37,9 +37,26 @@
 @media(max-width:650px){.answer-grid,.check-grid{grid-template-columns:1fr}.rung{grid-template-columns:1fr}.rung-num{width:44px;height:44px}}
 @media print{header,footer,.tool-sidebar,.breadcrumbs{display:none!important}.page-hero{padding:1rem 0}.decision-node,.rung{break-inside:avoid}}
 </style>
+
+<style>
+  .site-logo {
+    display: block;
+    height: 140px;
+    width: auto;
+    max-width: min(600px, 72vw);
+    object-fit: contain;
+  }
+  @media (max-width: 700px) {
+    .site-logo {
+      height: 96px;
+      max-width: 82vw;
+    }
+  }
+</style>
+
 </head>
 <body><a class="skip-link" href="#main">Skip to main content</a>
-<header class="site-header"><div class="shell nav-wrap"><a class="brand" href="index.html"><span class="brand-mark">CAIL</span><span class="brand-text">Critical AI Literacy</span></a><nav class="site-nav"><a href="index.html#teaching">Teaching</a><a href="ai-use-decision-tree.html">Decision Tree</a><a href="prompt-verification-ladder.html" aria-current="page">Verification Ladder</a></nav></div></header>
+<header class="site-header"><div class="shell nav-wrap"><a class="brand" href="index.html" aria-label="Critical AI Literacy home"><img class="site-logo" src="critical-ai-literacy-logo.png" alt="Critical AI Literacy"></a><nav class="site-nav"><a href="index.html#teaching">Teaching</a><a href="ai-use-decision-tree.html">Decision Tree</a><a href="prompt-verification-ladder.html" aria-current="page">Verification Ladder</a></nav></div></header>
 <main id="main">
 <section class="page-hero"><div class="shell"><p class="breadcrumbs"><a href="index.html">Home</a> / Teaching / Prompt-to-Verification Ladder</p><p class="eyebrow">Teaching Resource</p><h1>Prompt-to-Verification Ladder</h1><p class="lede">A six-rung process that turns an AI response from a polished blob of text into a set of claims you can test, source, revise, or reject.</p></div></section>
 <section class="section"><div class="shell tool-layout">
