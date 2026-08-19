@@ -10,6 +10,134 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .matrix-methodology {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      border: 1px solid rgba(22,38,58,.14);
+      border-radius: 1rem;
+      background: rgba(255,255,255,.72);
+    }
+    .matrix-methodology h3 { margin-top: .25rem; }
+    .matrix-methodology p:last-child { margin-bottom: 0; }
+    .matrix-controls {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, minmax(10rem, 1fr)) auto;
+      gap: .9rem;
+      align-items: end;
+      margin: 1.5rem 0 .75rem;
+    }
+    .matrix-controls label {
+      display: grid;
+      gap: .4rem;
+      font-size: .9rem;
+      font-weight: 700;
+    }
+    .matrix-controls input,
+    .matrix-controls select {
+      width: 100%;
+      min-height: 2.75rem;
+      padding: .65rem .75rem;
+      border: 1px solid rgba(22,38,58,.22);
+      border-radius: .65rem;
+      background: #fff;
+      color: inherit;
+      font: inherit;
+    }
+    .matrix-count {
+      margin: .5rem 0 1rem;
+      color: var(--muted, #5d6874);
+      font-size: .95rem;
+    }
+    .matrix-wrap {
+      overflow-x: auto;
+      border: 1px solid rgba(22,38,58,.14);
+      border-radius: 1rem;
+      background: #fff;
+      box-shadow: 0 14px 34px rgba(22,38,58,.07);
+    }
+    .framework-matrix {
+      width: 100%;
+      min-width: 1180px;
+      border-collapse: collapse;
+      font-size: .94rem;
+    }
+    .framework-matrix th,
+    .framework-matrix td {
+      padding: .9rem 1rem;
+      border-bottom: 1px solid rgba(22,38,58,.1);
+      text-align: left;
+      vertical-align: top;
+    }
+    .framework-matrix thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #16263a;
+      color: #fff;
+      font-size: .82rem;
+      line-height: 1.3;
+    }
+    .framework-matrix tbody th {
+      min-width: 220px;
+      font-weight: 700;
+    }
+    .framework-matrix tbody tr:hover { background: rgba(33,130,122,.045); }
+    .framework-matrix tbody tr:last-child th,
+    .framework-matrix tbody tr:last-child td { border-bottom: 0; }
+    .sort-button {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+    }
+    .sort-button::after {
+      content: " ↕";
+      opacity: .55;
+      font-size: .85em;
+    }
+    .sort-button[aria-sort="ascending"]::after { content: " ↑"; opacity: 1; }
+    .sort-button[aria-sort="descending"]::after { content: " ↓"; opacity: 1; }
+    .depth-pill {
+      display: inline-block;
+      padding: .25rem .55rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      font-size: .8rem;
+      font-weight: 700;
+      border: 1px solid currentColor;
+    }
+    .depth-moderate { color: #6a5a00; background: #fff7c7; }
+    .depth-moderate-high { color: #6a4300; background: #ffeed4; }
+    .depth-high { color: #0d5c55; background: #def5f1; }
+    .depth-very-high { color: #5b2d79; background: #f0e5f7; }
+    .matrix-footnote { margin-top: 1rem; }
+    .matrix-followups { margin-top: 2rem; }
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0,0,0,0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+    @media (max-width: 1050px) {
+      .matrix-controls { grid-template-columns: 1fr 1fr; }
+      .matrix-controls .button { width: 100%; }
+    }
+    @media (max-width: 640px) {
+      .matrix-controls { grid-template-columns: 1fr; }
+    }
+  </style>
+
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -135,15 +263,196 @@
       </div>
     </section>
 
+
     <section class="section" id="frameworks">
       <div class="shell">
         <div class="section-head">
-          <div><p class="eyebrow">Frameworks & scholarship</p><h2>Map the field, not just the tools.</h2></div>
-          <p>This section will collect and compare critical AI literacy frameworks, conceptual models, empirical studies, and emerging scholarship across higher education.</p>
+          <div>
+            <p class="eyebrow">Frameworks & scholarship</p>
+            <h2>Compare how different frameworks define AI literacy.</h2>
+          </div>
+          <p>These frameworks differ in purpose, population, evidence base, and critical depth. The matrix is designed to make those differences visible without treating one framework as universally “best.”</p>
         </div>
-        <div class="resource-grid">
-          <article class="resource-card"><p class="label">Coming first</p><h3>Framework comparison</h3><p>A crosswalk of major AI literacy and critical AI literacy frameworks, including populations, critical depth, evidence base, and practical uses.</p><a href="#project">Follow the project →</a></article>
-          <article class="resource-card"><p class="label">In development</p><h3>Critical dimensions index</h3><p>A structured way to examine whether frameworks meaningfully address bias, power, privacy, surveillance, labor, equity, environmental impact, and epistemic authority.</p><a href="#project">See what is being built →</a></article>
+
+        <div class="matrix-methodology" aria-labelledby="matrix-method-heading">
+          <p class="label">Methodology</p>
+          <h3 id="matrix-method-heading">How Critical Depth and Portability are assigned</h3>
+          <p><strong>Critical Depth</strong> describes how centrally a framework addresses social, political, epistemic, ethical, and structural dimensions of AI. <strong>Low</strong> focuses mainly on technical or operational competence. <strong>Moderate</strong> adds evaluation and ethics. <strong>High</strong> gives substantial attention to issues such as power, equity, privacy, accessibility, accountability, or human agency. <strong>Very High</strong> makes structural critique, justice, political economy, social transformation, or the possibility of resisting or refusing AI central to the framework.</p>
+          <p><strong>Portability</strong> estimates how readily the framework can be adapted beyond its original setting. <strong>High</strong> indicates broad applicability across institutions, disciplines, or populations. <strong>Moderate–High</strong> indicates strong transfer potential with some contextual adaptation. <strong>Moderate</strong> indicates that meaningful translation would be needed because the framework is closely tied to a particular population, institution, national setting, or professional context.</p>
+          <p class="note"><strong>Important:</strong> These classifications are analytic descriptions developed for CriticalAILiteracy.net. They are not quality rankings. A framework may be highly useful for its intended purpose without addressing every critical dimension.</p>
+        </div>
+
+        <div class="matrix-controls" aria-label="Framework filters">
+          <label>
+            Search frameworks
+            <input id="framework-search" type="search" placeholder="Search by name, use, evidence, population…" autocomplete="off">
+          </label>
+
+          <label>
+            Framework type
+            <select id="framework-type-filter">
+              <option value="">All types</option>
+              <option value="Competency / developmental">Competency / developmental</option>
+              <option value="Institutional / policy">Institutional / policy</option>
+              <option value="Competency / professional">Competency / professional</option>
+              <option value="Competency / process model">Competency / process model</option>
+              <option value="Critical-literacy framework">Critical-literacy framework</option>
+              <option value="Critical / developmental / pedagogical">Critical / developmental / pedagogical</option>
+              <option value="Critical / pedagogical">Critical / pedagogical</option>
+              <option value="Critical + evaluation framework">Critical + evaluation framework</option>
+            </select>
+          </label>
+
+          <label>
+            Critical depth
+            <select id="critical-depth-filter">
+              <option value="">All levels</option>
+              <option value="Moderate">Moderate</option>
+              <option value="Moderate–High">Moderate–High</option>
+              <option value="High">High</option>
+              <option value="Very High">Very High</option>
+            </select>
+          </label>
+
+          <label>
+            Portability
+            <select id="portability-filter">
+              <option value="">All levels</option>
+              <option value="Moderate">Moderate</option>
+              <option value="Moderate–High">Moderate–High</option>
+              <option value="High">High</option>
+            </select>
+          </label>
+
+          <button class="button secondary" id="framework-reset" type="button">Reset filters</button>
+        </div>
+
+        <p class="matrix-count" aria-live="polite"><span id="framework-count">9</span> frameworks shown</p>
+
+        <div class="matrix-wrap" tabindex="0" aria-label="Scrollable framework comparison table">
+          <table class="framework-matrix">
+            <caption class="sr-only">Comparison of nine AI literacy and critical AI literacy frameworks.</caption>
+            <thead>
+              <tr>
+                <th scope="col"><button class="sort-button" data-sort="name" type="button">Framework</button></th>
+                <th scope="col"><button class="sort-button" data-sort="year" type="button">Year</button></th>
+                <th scope="col">Framework Type</th>
+                <th scope="col">Primary Population</th>
+                <th scope="col"><button class="sort-button" data-sort="depth" type="button">Critical Depth</button></th>
+                <th scope="col">Evidence Base</th>
+                <th scope="col"><button class="sort-button" data-sort="portability" type="button">Portability</button></th>
+                <th scope="col">Especially Useful For</th>
+              </tr>
+            </thead>
+            <tbody id="framework-table-body">
+              <tr data-name="UNESCO AI Competency Framework for Students" data-year="2024" data-type="Competency / developmental" data-population="Students" data-depth="High" data-portability="High">
+                <th scope="row">UNESCO AI Competency Framework for Students</th>
+                <td>2024</td>
+                <td>Competency / developmental</td>
+                <td>Students</td>
+                <td><span class="depth-pill depth-high">High</span></td>
+                <td>Policy + international expert consultation</td>
+                <td>High</td>
+                <td>Curriculum, learning outcomes, assessment</td>
+              </tr>
+
+              <tr data-name="UNESCO AI Competency Framework for Teachers" data-year="2024" data-type="Competency / developmental" data-population="Teachers / faculty" data-depth="High" data-portability="High">
+                <th scope="row">UNESCO AI Competency Framework for Teachers</th>
+                <td>2024</td>
+                <td>Competency / developmental</td>
+                <td>Teachers / faculty</td>
+                <td><span class="depth-pill depth-high">High</span></td>
+                <td>Policy + international expert consultation</td>
+                <td>High</td>
+                <td>Faculty development, curriculum, pedagogy</td>
+              </tr>
+
+              <tr data-name="Chan AI Ecological Education Policy Framework" data-year="2023" data-type="Institutional / policy" data-population="Students, faculty, staff, leadership" data-depth="Moderate–High" data-portability="High">
+                <th scope="row">Chan AI Ecological Education Policy Framework</th>
+                <td>2023</td>
+                <td>Institutional / policy</td>
+                <td>Students, faculty, staff, leadership</td>
+                <td><span class="depth-pill depth-moderate-high">Moderate–High</span></td>
+                <td>Empirical mixed-methods</td>
+                <td>High</td>
+                <td>Institutional policy, governance, implementation</td>
+              </tr>
+
+              <tr data-name="Lo Academic Library AI Literacy Framework" data-year="2024" data-type="Competency / professional" data-population="Academic library employees" data-depth="Moderate" data-portability="Moderate–High">
+                <th scope="row">Lo Academic Library AI Literacy Framework</th>
+                <td>2024</td>
+                <td>Competency / professional</td>
+                <td>Academic library employees</td>
+                <td><span class="depth-pill depth-moderate">Moderate</span></td>
+                <td>Empirical survey</td>
+                <td>Moderate–High</td>
+                <td>Library professional development, workforce development, library policy</td>
+              </tr>
+
+              <tr data-name="Park GenAI Literacy Framework" data-year="2025" data-type="Competency / process model" data-population="Students" data-depth="Moderate" data-portability="High">
+                <th scope="row">Park GenAI Literacy Framework</th>
+                <td>2025</td>
+                <td>Competency / process model</td>
+                <td>Students</td>
+                <td><span class="depth-pill depth-moderate">Moderate</span></td>
+                <td>Systematic literature review</td>
+                <td>High</td>
+                <td>Teaching, student support, workflow design</td>
+              </tr>
+
+              <tr data-name="Veldhuis et al. Critical AI Literacy Framework" data-year="2025" data-type="Critical-literacy framework" data-population="Children / youth; adaptable to education" data-depth="Very High" data-portability="Moderate–High">
+                <th scope="row">Veldhuis et al. Critical AI Literacy Framework</th>
+                <td>2025</td>
+                <td>Critical-literacy framework</td>
+                <td>Children / youth; adaptable to education</td>
+                <td><span class="depth-pill depth-very-high">Very High</span></td>
+                <td>Systematic literature synthesis</td>
+                <td>Moderate–High</td>
+                <td>Critical pedagogy, curriculum analysis, research</td>
+              </tr>
+
+              <tr data-name="Open University Critical AI Literacy Framework" data-year="2025" data-type="Critical / developmental / pedagogical" data-population="Students and educators" data-depth="Very High" data-portability="Moderate–High">
+                <th scope="row">Open University Critical AI Literacy Framework</th>
+                <td>2025</td>
+                <td>Critical / developmental / pedagogical</td>
+                <td>Students and educators</td>
+                <td><span class="depth-pill depth-very-high">Very High</span></td>
+                <td>Institutional + research-informed</td>
+                <td>Moderate–High</td>
+                <td>Teaching, EDIA, curriculum, institutional practice</td>
+              </tr>
+
+              <tr data-name="Conrad & Kamperman Critical AI Literacy Approach" data-year="2025" data-type="Critical / pedagogical" data-population="Higher education educators" data-depth="Very High" data-portability="Moderate–High">
+                <th scope="row">Conrad &amp; Kamperman Critical AI Literacy Approach</th>
+                <td>2025</td>
+                <td>Critical / pedagogical</td>
+                <td>Higher education educators</td>
+                <td><span class="depth-pill depth-very-high">Very High</span></td>
+                <td>Conceptual + practice-informed</td>
+                <td>Moderate–High</td>
+                <td>Faculty development, policy critique, institutional decision-making</td>
+              </tr>
+
+              <tr data-name="Zhang et al. CAIL + RACBAC" data-year="2025" data-type="Critical + evaluation framework" data-population="Students, researchers, librarians" data-depth="Very High" data-portability="High">
+                <th scope="row">Zhang et al. CAIL + RACBAC</th>
+                <td>2025</td>
+                <td>Critical + evaluation framework</td>
+                <td>Students, researchers, librarians</td>
+                <td><span class="depth-pill depth-very-high">Very High</span></td>
+                <td>Scholarly synthesis / applied framework</td>
+                <td>High</td>
+                <td>Verification, research instruction, library instruction</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="matrix-footnote prose">
+          <p><strong>Current scope:</strong> This first release includes nine frameworks selected to represent different approaches to AI literacy, including competency, developmental, policy, professional, process, and explicitly critical models. Additional frameworks and individual framework profiles will be added as the comparison develops.</p>
+        </div>
+
+        <div class="resource-grid matrix-followups">
+          <article class="resource-card"><p class="label">Next layer</p><h3>Critical dimensions index</h3><p>A crosswalk showing how frameworks address bias, power, privacy, surveillance, labor, equity, accessibility, environmental impact, epistemic authority, verification, transparency, and agency.</p><a href="#project">In development →</a></article>
           <article class="resource-card"><p class="label">Research library</p><h3>Selected scholarship</h3><p>A curated and annotated collection of research for instructors, librarians, students, and researchers who need more than an undifferentiated bibliography.</p><a href="#research">Explore the research plan →</a></article>
         </div>
       </div>
@@ -221,6 +530,105 @@
       <div><p>criticalailiteracy.net</p><p>© <span id="year"></span> Critical AI Literacy</p></div>
     </div>
   </footer>
+
+  <script>
+    (() => {
+      const tbody = document.getElementById('framework-table-body');
+      if (!tbody) return;
+
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      const search = document.getElementById('framework-search');
+      const typeFilter = document.getElementById('framework-type-filter');
+      const depthFilter = document.getElementById('critical-depth-filter');
+      const portabilityFilter = document.getElementById('portability-filter');
+      const reset = document.getElementById('framework-reset');
+      const count = document.getElementById('framework-count');
+      const sortButtons = Array.from(document.querySelectorAll('.sort-button'));
+
+      const normalize = value => (value || '').toLowerCase().replace(/[–—]/g, '-');
+
+      function applyFilters() {
+        const query = normalize(search.value);
+        const type = typeFilter.value;
+        const depth = depthFilter.value;
+        const portability = portabilityFilter.value;
+        let visible = 0;
+
+        rows.forEach(row => {
+          const searchable = normalize(row.textContent);
+          const matches =
+            (!query || searchable.includes(query)) &&
+            (!type || row.dataset.type === type) &&
+            (!depth || row.dataset.depth === depth) &&
+            (!portability || row.dataset.portability === portability);
+
+          row.hidden = !matches;
+          if (matches) visible++;
+        });
+
+        count.textContent = visible;
+      }
+
+      [search, typeFilter, depthFilter, portabilityFilter].forEach(control => {
+        control.addEventListener(control.tagName === 'INPUT' ? 'input' : 'change', applyFilters);
+      });
+
+      reset.addEventListener('click', () => {
+        search.value = '';
+        typeFilter.value = '';
+        depthFilter.value = '';
+        portabilityFilter.value = '';
+        applyFilters();
+        search.focus();
+      });
+
+      const depthRank = {'Moderate': 1, 'Moderate–High': 2, 'High': 3, 'Very High': 4};
+      const portabilityRank = {'Moderate': 1, 'Moderate–High': 2, 'High': 3};
+
+      sortButtons.forEach(button => {
+        button.setAttribute('aria-sort', 'none');
+
+        button.addEventListener('click', () => {
+          const key = button.dataset.sort;
+          const nextDirection = button.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending';
+
+          sortButtons.forEach(other => other.setAttribute('aria-sort', 'none'));
+          button.setAttribute('aria-sort', nextDirection);
+
+          const multiplier = nextDirection === 'ascending' ? 1 : -1;
+
+          const sorted = [...rows].sort((a, b) => {
+            let aValue, bValue;
+
+            if (key === 'year') {
+              aValue = Number(a.dataset.year);
+              bValue = Number(b.dataset.year);
+              return (aValue - bValue) * multiplier;
+            }
+
+            if (key === 'depth') {
+              aValue = depthRank[a.dataset.depth] || 0;
+              bValue = depthRank[b.dataset.depth] || 0;
+              return (aValue - bValue) * multiplier;
+            }
+
+            if (key === 'portability') {
+              aValue = portabilityRank[a.dataset.portability] || 0;
+              bValue = portabilityRank[b.dataset.portability] || 0;
+              return (aValue - bValue) * multiplier;
+            }
+
+            aValue = a.dataset.name;
+            bValue = b.dataset.name;
+            return aValue.localeCompare(bValue) * multiplier;
+          });
+
+          sorted.forEach(row => tbody.appendChild(row));
+        });
+      });
+    })();
+  </script>
+
   <script src="script.js"></script>
 </body>
 </html>
