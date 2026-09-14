@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Conference Proposal Tracker</title>
+
+<!-- ================================================================
+     SETUP: fill these two values in after creating your Supabase
+     project (see the setup checklist that came with this file).
+     Until you do, the page runs in LOCAL DEMO MODE: data is saved
+     only in this browser and the Excel export is your backup.
+     ================================================================ -->
+<script>
+  const SUPABASE_URL = "https://vidpocomotmeivtbmvlf.supabase.co/rest/v1/";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZpZHBvY29tb3RtZWl2dGJtdmxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkwNjQzODksImV4cCI6MjEwNDY0MDM4OX0.1JhK5C5BU3t2IT29k5I6K8k_VSJwoZBRkIw8mG5pnGI";
+  const TABLE = "proposals";
+  // Authorization is enforced by Supabase Row Level Security.
+  // shouldCreateUser:false prevents arbitrary visitors from creating accounts here.
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<style>
+  :root {
+    --navy: #16263a;
+    --green: #2f6b4f;
+    --line: #d7ddd9;
+    --ink: #26302b;
+    --muted: #6f7a73;
+    --bg: #f7f9f8;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--bg); }
+  header { background: var(--navy); color: #fff; padding: 18px 22px; }
+  header h1 { margin: 0; font-size: 19px; font-weight: 650; }
+  header p { margin: 4px 0 0; font-size: 13px; opacity: .8; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 18px 22px 60px; }
+  .bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 16px 0; }
+  .bar .spacer { flex: 1; }
+  button { font: inherit; cursor: pointer; border-radius: 6px; border: 1px solid var(--line); background: #fff; color: var(--ink); padding: 8px 14px; font-size: 13px; }
+  button.primary { background: var(--green); color: #fff; border-color: var(--green); font-weight: 600; }
+  button.ghost { color: var(--muted); }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  input, select, textarea { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; width: 100%; background: #fff; }
+  label { font-size: 12px; font-weight: 600; color: var(--muted); display: block; margin: 10px 0 4px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); font-size: 13px; vertical-align: top; }
+  th { background: #eef2f0; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); }
+  tr:last-child td { border-bottom: none; }
+  .pill { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; background: #eef2f0; color: var(--navy); }
+  .banner { padding: 10px 14px; border-radius: 8px; font-size: 13px; margin: 12px 0; }
+  .banner.warn { background: #fff4e0; border: 1px solid #f0d38a; color: #7a5a00; }
+  .banner.err { background: #fde7e7; border: 1px solid #f0a3a3; color: #8a1f1f; }
+  .banner.ok { background: #e6f4ec; border: 1px solid #9bd3b3; color: #1e5c3a; }
+  .overlay { position: fixed; inset: 0; background: rgba(20,30,40,.45); display: flex; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow: auto; }
+  .modal { background: #fff; border-radius: 10px; max-width: 720px; width: 100%; padding: 22px; }
+  .modal h2 { margin: 0 0 8px; font-size: 17px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+  .authbox { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 24px; max-width: 420px; margin: 40px auto; }
+  .muted { color: var(--muted); font-size: 12px; }
+  a { color: var(--green); }
+  .return-link { display:inline-block; margin-top:8px; color:#fff; font-size:12px; text-decoration:none; opacity:.9; }
+  .return-link:hover, .return-link:focus { text-decoration:underline; opacity:1; }
+  @media (max-width: 620px) { .grid2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Conference Proposal Tracker</h1>
+  <p id="modeline">Loading…</p>
+  <a class="return-link" href="index.html">← Return to Critical AI Literacy</a>
+</header>
+
+<div class="wrap">
+  <div id="authArea"></div>
+  <div id="appArea" style="display:none;">
+    <div id="msg"></div>
+    <div class="bar">
+      <button class="primary" id="btnNew">+ New proposal</button>
+      <button id="btnExcel">⬇ Export Excel</button>
+      <button id="btnImport">⬆ Import Excel</button>
+      <button class="ghost" id="btnJson">JSON</button>
+      <input id="fileInput" type="file" accept=".xlsx,.xls" style="display:none" />
+      <span class="spacer"></span>
+      <span class="muted" id="count"></span>
+      <button class="ghost" id="btnSignout" style="display:none">Sign out</button>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Conference</th><th>Title</th><th>Status</th><th>CFP Deadline</th><th></th></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</div>
+
+<div id="modalRoot"></div>
+
+<script>
+/* ---------------------------------------------------------------- */
+/* Config detection                                                 */
+/* ---------------------------------------------------------------- */
+const CONFIGURED =
+  SUPABASE_URL.indexOf("http") === 0 && SUPABASE_ANON_KEY.length > 20;
+const LOCAL_KEY = "proposal-tracker-local-v1";
+
+let db = null;
+let session = null;
+let proposals = [];
+
+const STATUSES = ["Drafting", "Submitted", "Accepted", "Rejected", "Withdrawn", "Presented"];
+
+const COLUMNS = [
+  ["conference", "Conference"], ["organizer", "Organizer"], ["eventDates", "Event Dates"],
+  ["cfpDeadline", "CFP Deadline"], ["title", "Title"], ["abstract", "Abstract"],
+  ["format", "Format"], ["copresenters", "Co-presenters"], ["bios", "Presenter Bios"],
+  ["learningOutcomes", "Learning Outcomes"], ["fileLinks", "File Links"], ["status", "Status"],
+  ["submittedDate", "Submitted Date"], ["decisionDate", "Decision Date"], ["tags", "Tags"],
+  ["notes", "Notes"], ["feedback", "Reviewer Feedback"], ["createdAt", "Created At"],
+  ["updatedAt", "Updated At"], ["id", "Record ID"],
+];
+
+function uid() {
+  return "p_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8);
+}
+function emptyProposal() {
+  const now = new Date().toISOString();
+  return {
+    id: uid(), conference: "", organizer: "", eventDates: "", cfpDeadline: "",
+    title: "", abstract: "", format: "", copresenters: "", bios: "",
+    learningOutcomes: "", fileLinks: "", status: "Drafting",
+    submittedDate: "", decisionDate: "", tags: "", notes: "", feedback: "",
+    createdAt: now, updatedAt: now,
+  };
+}
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+function setMsg(text, kind) {
+  const el = document.getElementById("msg");
+  if (!text) { el.innerHTML = ""; return; }
+  el.innerHTML = '<div class="banner ' + (kind || "ok") + '">' + esc(text) + "</div>";
+}
+
+/* ---------------------------------------------------------------- */
+/* Data layer: cloud (Supabase) or local (this browser)             */
+/* ---------------------------------------------------------------- */
+async function loadProposals() {
+  if (CONFIGURED && session) {
+    const res = await db.from(TABLE).select("id,data");
+    if (res.error) throw res.error;
+    proposals = (res.data || []).map(function (r) { return r.data; });
+  } else {
+    try {
+      const raw = localStorage.getItem(LOCAL_KEY);
+      proposals = raw ? JSON.parse(raw) : [];
+    } catch (e) { proposals = []; }
+  }
+  proposals.sort(function (a, b) {
+    return String(b.updatedAt || "").localeCompare(String(a.updatedAt || ""));
+  });
+}
+
+async function saveProposal(rec) {
+  rec.updatedAt = new Date().toISOString();
+  if (CONFIGURED && session) {
+    const res = await db.from(TABLE).upsert({ id: rec.id, data: rec, updated_at: rec.updatedAt });
+    if (res.error) throw res.error;
+  } else {
+    const i = proposals.findIndex(function (p) { return p.id === rec.id; });
+    if (i >= 0) proposals[i] = rec; else proposals.push(rec);
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(proposals));
+  }
+}
+
+async function removeProposal(id) {
+  if (CONFIGURED && session) {
+    const res = await db.from(TABLE).delete().eq("id", id);
+    if (res.error) throw res.error;
+  } else {
+    proposals = proposals.filter(function (p) { return p.id !== id; });
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(proposals));
+  }
+}
+
+/* Bulk merge used by Excel import. Never deletes existing records. */
+async function mergeProposals(incoming) {
+  const byId = {};
+  proposals.forEach(function (p) { byId[p.id] = p; });
+  incoming.forEach(function (p) { byId[p.id] = p; });
+  const next = Object.values(byId);
+  if (CONFIGURED && session) {
+    const payload = next.map(function (p) {
+      return { id: p.id, data: p, updated_at: p.updatedAt || new Date().toISOString() };
+    });
+    const res = await db.from(TABLE).upsert(payload);
+    if (res.error) throw res.error;
+  } else {
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(next));
+  }
+  proposals = next;
+}
+
+/* ---------------------------------------------------------------- */
+/* Excel export / import                                            */
+/* ---------------------------------------------------------------- */
+function download(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+}
+
+function exportXLSX() {
+  const headers = COLUMNS.map(function (c) { return c[1]; });
+  const rows = proposals.map(function (p) {
+    const r = {};
+    COLUMNS.forEach(function (pair) { r[pair[1]] = p[pair[0]] == null ? "" : p[pair[0]]; });
+    return r;
+  });
+  const ws = XLSX.utils.json_to_sheet(rows, { header: headers });
+  ws["!cols"] = headers.map(function (h) { return { wch: Math.min(Math.max(h.length + 2, 14), 60) }; });
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Proposals");
+  const buf = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+  download(new Blob([buf], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }),
+    "proposal-archive-" + new Date().toISOString().slice(0, 10) + ".xlsx");
+}
+
+function exportJSON() {
+  download(new Blob([JSON.stringify(proposals, null, 2)], { type: "application/json" }),
+    "proposal-archive-" + new Date().toISOString().slice(0, 10) + ".json");
+}
+
+async function importXLSX(file) {
+  if (!file) return;
+  try {
+    const buf = await file.arrayBuffer();
+    const wb = XLSX.read(buf, { type: "array" });
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const sheetRows = XLSX.utils.sheet_to_json(ws, { defval: "" });
+    const labelToKey = {};
+    COLUMNS.forEach(function (pair) { labelToKey[pair[1]] = pair[0]; });
+    const incoming = sheetRows.map(function (row) {
+      const rec = emptyProposal();
+      Object.keys(row).forEach(function (label) {
+        const key = labelToKey[label];
+        if (key) rec[key] = row[label] == null ? "" : String(row[label]).trim();
+      });
+      if (STATUSES.indexOf(rec.status) === -1) rec.status = "Drafting";
+      rec.updatedAt = new Date().toISOString();
+      return rec;
+    }).filter(function (p) { return p.title || p.conference; });
+    if (incoming.length === 0) { setMsg("No usable rows found in that file.", "err"); return; }
+    await mergeProposals(incoming);
+    render();
+    setMsg("Imported " + incoming.length + " record(s).", "ok");
+  } catch (e) {
+    setMsg("Could not read that file. It should be an .xlsx exported from this tracker.", "err");
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/* Rendering                                                        */
+/* ---------------------------------------------------------------- */
+function render() {
+  const tbody = document.getElementById("rows");
+  document.getElementById("count").textContent = proposals.length + " record(s)";
+  if (proposals.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="muted">No proposals yet. Click “New proposal” to start.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = proposals.map(function (p) {
+    return "<tr>" +
+      "<td>" + esc(p.conference) + "</td>" +
+      "<td>" + esc(p.title) + "</td>" +
+      '<td><span class="pill">' + esc(p.status) + "</span></td>" +
+      "<td>" + esc(p.cfpDeadline) + "</td>" +
+      '<td style="white-space:nowrap">' +
+        '<button data-edit="' + p.id + '">Edit</button> ' +
+        '<button class="ghost" data-del="' + p.id + '">Delete</button>' +
+      "</td></tr>";
+  }).join("");
+  tbody.querySelectorAll("[data-edit]").forEach(function (b) {
+    b.onclick = function () { openForm(proposals.find(function (p) { return p.id === b.getAttribute("data-edit"); })); };
+  });
+  tbody.querySelectorAll("[data-del]").forEach(function (b) {
+    b.onclick = async function () {
+      const id = b.getAttribute("data-del");
+      if (!confirm("Delete this proposal? This cannot be undone.")) return;
+      try { await removeProposal(id); await loadProposals(); render(); setMsg("Deleted.", "ok"); }
+      catch (e) { setMsg("Delete failed: " + (e.message || e), "err"); }
+    };
+  });
+}
+
+function field(label, key, rec, type) {
+  if (type === "textarea")
+    return '<label>' + label + '</label><textarea data-k="' + key + '" rows="3">' + esc(rec[key]) + "</textarea>";
+  if (type === "status") {
+    return '<label>' + label + '</label><select data-k="' + key + '">' +
+      STATUSES.map(function (s) {
+        return '<option ' + (rec[key] === s ? "selected" : "") + ">" + s + "</option>";
+      }).join("") + "</select>";
+  }
+  return '<label>' + label + '</label><input data-k="' + key + '" value="' + esc(rec[key]) + '" />';
+}
+
+function openForm(rec) {
+  const editing = Object.assign({}, rec);
+  const root = document.getElementById("modalRoot");
+  root.innerHTML =
+    '<div class="overlay"><div class="modal">' +
+      "<h2>" + (proposals.some(function (p) { return p.id === rec.id; }) ? "Edit proposal" : "New proposal") + "</h2>" +
+      '<div class="grid2">' +
+        field("Conference", "conference", editing) +
+        field("Organizer", "organizer", editing) +
+        field("Event dates", "eventDates", editing) +
+        field("CFP deadline", "cfpDeadline", editing) +
+      "</div>" +
+      field("Title", "title", editing) +
+      field("Abstract", "abstract", editing, "textarea") +
+      '<div class="grid2">' +
+        field("Format", "format", editing) +
+        field("Status", "status", editing, "status") +
+        field("Co-presenters", "copresenters", editing) +
+        field("Submitted date", "submittedDate", editing) +
+        field("Decision date", "decisionDate", editing) +
+        field("Tags", "tags", editing) +
+      "</div>" +
+      field("Presenter bios", "bios", editing, "textarea") +
+      field("Learning outcomes", "learningOutcomes", editing, "textarea") +
+      field("File links", "fileLinks", editing, "textarea") +
+      field("Notes", "notes", editing, "textarea") +
+      field("Reviewer feedback", "feedback", editing, "textarea") +
+      '<div class="bar" style="margin-top:18px">' +
+        '<button class="primary" id="save">Save</button>' +
+        '<button class="ghost" id="cancel">Cancel</button>' +
+      "</div>" +
+    "</div></div>";
+
+  root.querySelector("#cancel").onclick = function () { root.innerHTML = ""; };
+  root.querySelector("#save").onclick = async function () {
+    root.querySelectorAll("[data-k]").forEach(function (el) { editing[el.getAttribute("data-k")] = el.value; });
+    if (!editing.title && !editing.conference) { alert("Give it at least a conference or a title."); return; }
+    try {
+      await saveProposal(editing);
+      await loadProposals();
+      render();
+      root.innerHTML = "";
+      setMsg("Saved.", "ok");
+    } catch (e) { setMsg("Save failed: " + (e.message || e), "err"); }
+  };
+}
+
+/* ---------------------------------------------------------------- */
+/* Auth                                                             */
+/* ---------------------------------------------------------------- */
+function renderAuth() {
+  const area = document.getElementById("authArea");
+  area.innerHTML =
+    '<div class="authbox">' +
+      "<h2>Sign in</h2>" +
+      '<p class="muted">Enter your approved email address. Access is limited to invited users. If your account has been authorized, you will receive a one-time sign-in link. No password needed.</p>' +
+      '<label>Email</label><input id="email" type="email" placeholder="you@hindscc.edu" />' +
+      '<div class="bar" style="margin-top:14px"><button class="primary" id="sendLink">Send sign-in link</button></div>' +
+      '<div id="authMsg"></div>' +
+    "</div>";
+  area.querySelector("#sendLink").onclick = async function () {
+    const email = area.querySelector("#email").value.trim();
+    if (!email) return;
+    const res = await db.auth.signInWithOtp({
+      email: email,
+      options: {
+        emailRedirectTo: window.location.href,
+        shouldCreateUser: false
+      }
+    });
+    const m = area.querySelector("#authMsg");
+    if (res.error) m.innerHTML = '<div class="banner err">' + esc(res.error.message) + "</div>";
+    else m.innerHTML = '<div class="banner ok">If this email is authorized, check your inbox for the sign-in link.</div>';
+  };
+}
+
+/* ---------------------------------------------------------------- */
+/* Boot                                                             */
+/* ---------------------------------------------------------------- */
+async function boot() {
+  const modeline = document.getElementById("modeline");
+  const appArea = document.getElementById("appArea");
+  const authArea = document.getElementById("authArea");
+  const signout = document.getElementById("btnSignout");
+
+  if (!CONFIGURED) {
+    modeline.textContent = "Local demo mode — data saved only in this browser. Export to Excel to keep it.";
+    appArea.style.display = "";
+    authArea.style.display = "none";
+    setMsg("Not connected to the cloud yet. This is demo mode: entries live only in this browser. Fill in your Supabase keys to switch on shared, saved storage.", "warn");
+    await loadProposals();
+    render();
+    return;
+  }
+
+  db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const sres = await db.auth.getSession();
+  session = sres.data.session;
+
+  db.auth.onAuthStateChange(async function (_event, s) {
+    session = s;
+    await showForSession();
+  });
+
+  await showForSession();
+
+  async function showForSession() {
+    if (session) {
+      modeline.textContent = "Signed in as " + (session.user && session.user.email ? session.user.email : "user") + " — data saved to the shared cloud database.";
+      authArea.style.display = "none";
+      appArea.style.display = "";
+      signout.style.display = "";
+      signout.onclick = async function () { await db.auth.signOut(); };
+      try { await loadProposals(); render(); }
+      catch (e) { setMsg("Could not load records: " + (e.message || e), "err"); }
+    } else {
+      modeline.textContent = "Please sign in.";
+      appArea.style.display = "none";
+      authArea.style.display = "";
+      renderAuth();
+    }
+  }
+}
+
+document.getElementById("btnNew").onclick = function () { openForm(emptyProposal()); };
+document.getElementById("btnExcel").onclick = exportXLSX;
+document.getElementById("btnJson").onclick = exportJSON;
+document.getElementById("btnImport").onclick = function () { document.getElementById("fileInput").click(); };
+document.getElementById("fileInput").onchange = function (e) {
+  const f = e.target.files && e.target.files[0];
+  importXLSX(f);
+  e.target.value = "";
+};
+
+boot();
+</script>
+</body>
+</html>
