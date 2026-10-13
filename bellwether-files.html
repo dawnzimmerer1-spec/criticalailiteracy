@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
+    .site-logo{display:block;height:64px;width:auto;max-width:min(360px,62vw);object-fit:contain}
     .game-hero{padding:6rem 0;background:linear-gradient(145deg,#fbfaf7 58%,#dfe9e4 58%)}
     .game-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:4rem;align-items:center}
     .game-hero h1{font-family:var(--serif);font-size:clamp(3rem,6vw,5.5rem);font-weight:600;line-height:1.02;letter-spacing:-.025em;margin:0}
@@ -27,7 +28,13 @@
     .design-panel h2{font-family:var(--serif);font-size:2rem;margin-top:0}
     .design-panel li{margin:.8rem 0;color:#d7dfe5}
     .license-note{margin-top:2rem;padding:1.25rem;border-left:4px solid var(--accent);background:#fff;color:var(--ink)}
-    @media(max-width:850px){.game-hero-grid,.game-grid{grid-template-columns:1fr;gap:2.5rem}.qr-card{max-width:340px}.game-hero{padding:4.5rem 0}}
+    .play-section{padding-top:4.5rem;background:#f1f4f1}
+    .play-section .section-headline{max-width:850px;margin-bottom:1.5rem}
+    .game-frame-wrap{overflow:hidden;border:1px solid var(--line);border-radius:1rem;background:#061b22;box-shadow:var(--shadow)}
+    .game-frame{display:block;width:100%;height:min(850px,82vh);min-height:650px;border:0}
+    .frame-fallback{margin:1rem 0 0;color:var(--muted)}
+    .frame-fallback a{color:var(--teal-dark);font-weight:700}
+    @media(max-width:850px){.site-logo{height:52px;max-width:70vw}.game-hero-grid,.game-grid{grid-template-columns:1fr;gap:2.5rem}.qr-card{max-width:340px}.game-hero{padding:4.5rem 0}.game-frame{height:78vh;min-height:560px}}
   </style>
 </head>
 <body>
@@ -64,6 +71,20 @@
           <img src="bellwether-files-qr.svg" alt="QR code linking to The Bellwether Files game">
           <p>bellwether-files.dawnzimmerer1.chatgpt.site</p>
         </aside>
+      </div>
+    </section>
+
+    <section class="section play-section" aria-labelledby="play-heading">
+      <div class="shell">
+        <div class="section-headline">
+          <p class="eyebrow">Play on this page</p>
+          <h2 id="play-heading">Begin the investigation</h2>
+          <p class="large-prose">Choose a case inside the game below. Progress is saved in this browser, and no commercial AI account is required.</p>
+        </div>
+        <div class="game-frame-wrap">
+          <iframe class="game-frame" src="https://bellwether-files.dawnzimmerer1.chatgpt.site/" title="Play The Bellwether Files critical AI literacy game" loading="eager" allowfullscreen></iframe>
+        </div>
+        <p class="frame-fallback">If the embedded game does not load, <a href="https://bellwether-files.dawnzimmerer1.chatgpt.site/" target="_blank" rel="noopener">open The Bellwether Files in a new tab</a>.</p>
       </div>
     </section>
 
