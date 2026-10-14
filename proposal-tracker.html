@@ -12,11 +12,9 @@
      only in this browser and the Excel export is your backup.
      ================================================================ -->
 <script>
-  const SUPABASE_URL = "https://vidpocomotmeivtbmvlf.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZpZHBvY29tb3RtZWl2dGJtdmxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkwNjQzODksImV4cCI6MjEwNDY0MDM4OX0.1JhK5C5BU3t2IT29k5I6K8k_VSJwoZBRkIw8mG5pnGI";
+  const SUPABASE_URL = "PASTE_YOUR_SUPABASE_URL_HERE";
+  const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
   const TABLE = "proposals";
-  // Authorization is enforced by Supabase Row Level Security.
-  // shouldCreateUser:false prevents arbitrary visitors from creating accounts here.
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -61,8 +59,6 @@
   .authbox { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 24px; max-width: 420px; margin: 40px auto; }
   .muted { color: var(--muted); font-size: 12px; }
   a { color: var(--green); }
-  .return-link { display:inline-block; margin-top:8px; color:#fff; font-size:12px; text-decoration:none; opacity:.9; }
-  .return-link:hover, .return-link:focus { text-decoration:underline; opacity:1; }
   @media (max-width: 620px) { .grid2 { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -70,7 +66,6 @@
 <header>
   <h1>Conference Proposal Tracker</h1>
   <p id="modeline">Loading…</p>
-  <a class="return-link" href="index.html">← Return to Critical AI Literacy</a>
 </header>
 
 <div class="wrap">
@@ -369,25 +364,31 @@ function renderAuth() {
   area.innerHTML =
     '<div class="authbox">' +
       "<h2>Sign in</h2>" +
-      '<p class="muted">Enter your approved email address. Access is limited to invited users. If your account has been authorized, you will receive a one-time sign-in link. No password needed.</p>' +
-      '<label>Email</label><input id="email" type="email" placeholder="you@hindscc.edu" />' +
-      '<div class="bar" style="margin-top:14px"><button class="primary" id="sendLink">Send sign-in link</button></div>' +
+      '<p class="muted">Access is limited to invited users. Enter the email and password you were given.</p>' +
+      '<label>Email</label><input id="email" type="email" placeholder="you@hindscc.edu" autocomplete="username" />' +
+      '<label>Password</label><input id="password" type="password" placeholder="Your password" autocomplete="current-password" />' +
+      '<div class="bar" style="margin-top:14px"><button class="primary" id="signIn">Sign in</button></div>' +
       '<div id="authMsg"></div>' +
     "</div>";
-  area.querySelector("#sendLink").onclick = async function () {
+
+  async function doSignIn() {
     const email = area.querySelector("#email").value.trim();
-    if (!email) return;
-    const res = await db.auth.signInWithOtp({
-      email: email,
-      options: {
-        emailRedirectTo: window.location.href,
-        shouldCreateUser: false
-      }
-    });
+    const password = area.querySelector("#password").value;
     const m = area.querySelector("#authMsg");
+    if (!email || !password) {
+      m.innerHTML = '<div class="banner err">Enter both email and password.</div>';
+      return;
+    }
+    m.innerHTML = '<div class="banner ok">Signing in…</div>';
+    const res = await db.auth.signInWithPassword({ email: email, password: password });
     if (res.error) m.innerHTML = '<div class="banner err">' + esc(res.error.message) + "</div>";
-    else m.innerHTML = '<div class="banner ok">If this email is authorized, check your inbox for the sign-in link.</div>';
-  };
+    // success triggers onAuthStateChange, which swaps to the app view.
+  }
+
+  area.querySelector("#signIn").onclick = doSignIn;
+  area.querySelector("#password").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") doSignIn();
+  });
 }
 
 /* ---------------------------------------------------------------- */
