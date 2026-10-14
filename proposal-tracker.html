@@ -87,7 +87,7 @@
     </div>
     <table>
       <thead>
-        <tr><th>Conference</th><th>Title</th><th>Status</th><th>CFP Deadline</th><th></th></tr>
+        <tr id="headRow"></tr>
       </thead>
       <tbody id="rows"></tbody>
     </table>
@@ -119,6 +119,43 @@ const COLUMNS = [
   ["notes", "Notes"], ["feedback", "Reviewer Feedback"], ["createdAt", "Created At"],
   ["updatedAt", "Updated At"], ["id", "Record ID"],
 ];
+
+/* Columns shown in the table, in order, that can be clicked to sort. */
+const SORT_COLUMNS = [
+  ["conference", "Conference"],
+  ["title", "Title"],
+  ["status", "Status"],
+  ["cfpDeadline", "CFP Deadline"],
+];
+
+/* Current sort: which field and which direction. Resets on reload. */
+let sortState = { key: "updatedAt", dir: "desc" };
+
+/* Return a sorted copy of proposals per sortState.
+   Blanks always sort to the bottom regardless of direction.
+   Status sorts by its workflow order (Drafting first), not alphabetically.
+   CFP Deadline sorts as a real date when both values parse as dates. */
+function sortedProposals() {
+  const key = sortState.key;
+  const dir = sortState.dir === "asc" ? 1 : -1;
+  return proposals.slice().sort(function (a, b) {
+    const av = (a[key] == null ? "" : String(a[key])).trim();
+    const bv = (b[key] == null ? "" : String(b[key])).trim();
+    if (!av && !bv) return 0;
+    if (!av) return 1;
+    if (!bv) return -1;
+    let base;
+    if (key === "status") {
+      base = STATUSES.indexOf(a.status) - STATUSES.indexOf(b.status);
+    } else if (key === "cfpDeadline") {
+      const ad = Date.parse(av), bd = Date.parse(bv);
+      base = (!isNaN(ad) && !isNaN(bd)) ? (ad - bd) : av.toLowerCase().localeCompare(bv.toLowerCase());
+    } else {
+      base = av.toLowerCase().localeCompare(bv.toLowerCase());
+    }
+    return base * dir;
+  });
+}
 
 function uid() {
   return "p_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8);
@@ -269,14 +306,37 @@ async function importXLSX(file) {
 /* ---------------------------------------------------------------- */
 /* Rendering                                                        */
 /* ---------------------------------------------------------------- */
+function renderHead() {
+  const headRow = document.getElementById("headRow");
+  if (!headRow) return;
+  headRow.innerHTML = SORT_COLUMNS.map(function (h) {
+    const active = sortState.key === h[0];
+    const arrow = active ? (sortState.dir === "asc" ? " \u25B2" : " \u25BC") : "";
+    return '<th data-sort="' + h[0] + '" title="Click to sort" style="cursor:pointer; user-select:none;">' + h[1] + arrow + "</th>";
+  }).join("") + "<th></th>";
+  headRow.querySelectorAll("[data-sort]").forEach(function (th) {
+    th.onclick = function () {
+      const k = th.getAttribute("data-sort");
+      if (sortState.key === k) {
+        sortState.dir = sortState.dir === "asc" ? "desc" : "asc";
+      } else {
+        sortState.key = k;
+        sortState.dir = "asc";
+      }
+      render();
+    };
+  });
+}
+
 function render() {
   const tbody = document.getElementById("rows");
+  renderHead();
   document.getElementById("count").textContent = proposals.length + " record(s)";
   if (proposals.length === 0) {
     tbody.innerHTML = '<tr><td colspan="5" class="muted">No proposals yet. Click “New proposal” to start.</td></tr>';
     return;
   }
-  tbody.innerHTML = proposals.map(function (p) {
+  tbody.innerHTML = sortedProposals().map(function (p) {
     return "<tr>" +
       "<td>" + esc(p.conference) + "</td>" +
       "<td>" + esc(p.title) + "</td>" +
