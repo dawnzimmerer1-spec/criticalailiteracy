@@ -12,8 +12,8 @@
      only in this browser and the Excel export is your backup.
      ================================================================ -->
 <script>
-  const SUPABASE_URL = "PASTE_YOUR_SUPABASE_URL_HERE";
-  const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
+  const SUPABASE_URL = "https://vidpocomotmeivtbmvlf.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZpZHBvY29tb3RtZWl2dGJtdmxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkwNjQzODksImV4cCI6MjEwNDY0MDM4OX0.1JhK5C5BU3t2IT29k5I6K8k_VSJwoZBRkIw8mG5pnGI";
   const TABLE = "proposals";
 </script>
 
@@ -59,6 +59,8 @@
   .authbox { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 24px; max-width: 420px; margin: 40px auto; }
   .muted { color: var(--muted); font-size: 12px; }
   a { color: var(--green); }
+  .return-link { display:inline-block; margin-top:8px; color:#fff; font-size:12px; text-decoration:none; opacity:.9; }
+  .return-link:hover, .return-link:focus { text-decoration:underline; opacity:1; }
   @media (max-width: 620px) { .grid2 { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -66,6 +68,7 @@
 <header>
   <h1>Conference Proposal Tracker</h1>
   <p id="modeline">Loading…</p>
+  <a class="return-link" href="index.html">← Return to Critical AI Literacy</a>
 </header>
 
 <div class="wrap">
