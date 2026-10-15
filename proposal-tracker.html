@@ -513,4 +513,11 @@ document.getElementById("btnJson").onclick = exportJSON;
 document.getElementById("btnImport").onclick = function () { document.getElementById("fileInput").click(); };
 document.getElementById("fileInput").onchange = function (e) {
   const f = e.target.files && e.target.files[0];
-  im
+  importXLSX(f);
+  e.target.value = "";
+};
+
+boot();
+</script>
+</body>
+</html>
