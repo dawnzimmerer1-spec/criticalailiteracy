@@ -124,6 +124,7 @@ const COLUMNS = [
 /* Columns shown in the table, in order, that can be clicked to sort. */
 const SORT_COLUMNS = [
   ["conference", "Conference"],
+  ["organizer", "Organizer"],
   ["title", "Title"],
   ["status", "Status"],
   ["cfpDeadline", "CFP Deadline"],
@@ -336,12 +337,13 @@ function render() {
   renderHead();
   document.getElementById("count").textContent = proposals.length + " record(s)";
   if (proposals.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" class="muted">No proposals yet. Click “New proposal” to start.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="muted">No proposals yet. Click “New proposal” to start.</td></tr>';
     return;
   }
   tbody.innerHTML = sortedProposals().map(function (p) {
     return "<tr>" +
       "<td>" + esc(p.conference) + "</td>" +
+      "<td>" + esc(p.organizer) + "</td>" +
       "<td>" + esc(p.title) + "</td>" +
       '<td><span class="pill">' + esc(p.status) + "</span></td>" +
       "<td>" + esc(p.cfpDeadline) + "</td>" +
@@ -511,11 +513,4 @@ document.getElementById("btnJson").onclick = exportJSON;
 document.getElementById("btnImport").onclick = function () { document.getElementById("fileInput").click(); };
 document.getElementById("fileInput").onchange = function (e) {
   const f = e.target.files && e.target.files[0];
-  importXLSX(f);
-  e.target.value = "";
-};
-
-boot();
-</script>
-</body>
-</html>
+  im
