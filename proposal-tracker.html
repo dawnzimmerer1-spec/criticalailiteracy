@@ -46,6 +46,7 @@
   table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
   th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); font-size: 13px; vertical-align: top; }
   th { background: #eef2f0; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); }
+  th.sortable:hover { background: #dfe8e3; color: var(--navy); }
   tr:last-child td { border-bottom: none; }
   .pill { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; background: #eef2f0; color: var(--navy); }
   .banner { padding: 10px 14px; border-radius: 8px; font-size: 13px; margin: 12px 0; }
@@ -311,8 +312,10 @@ function renderHead() {
   if (!headRow) return;
   headRow.innerHTML = SORT_COLUMNS.map(function (h) {
     const active = sortState.key === h[0];
-    const arrow = active ? (sortState.dir === "asc" ? " \u25B2" : " \u25BC") : "";
-    return '<th data-sort="' + h[0] + '" title="Click to sort" style="cursor:pointer; user-select:none;">' + h[1] + arrow + "</th>";
+    const arrow = active
+      ? '<span style="color:var(--green); font-weight:700;"> ' + (sortState.dir === "asc" ? "&#9650;" : "&#9660;") + "</span>"
+      : '<span style="color:#b8c2bc;"> &#8645;</span>';
+    return '<th data-sort="' + h[0] + '" class="sortable" title="Click to sort" style="cursor:pointer; user-select:none;">' + h[1] + arrow + "</th>";
   }).join("") + "<th></th>";
   headRow.querySelectorAll("[data-sort]").forEach(function (th) {
     th.onclick = function () {
