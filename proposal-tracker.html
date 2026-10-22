@@ -128,6 +128,7 @@ const SORT_COLUMNS = [
   ["title", "Title"],
   ["status", "Status"],
   ["cfpDeadline", "CFP Deadline"],
+  ["eventDates", "Event Dates"],
 ];
 
 /* Current sort: which field and which direction. Resets on reload. */
@@ -149,7 +150,7 @@ function sortedProposals() {
     let base;
     if (key === "status") {
       base = STATUSES.indexOf(a.status) - STATUSES.indexOf(b.status);
-    } else if (key === "cfpDeadline") {
+    } else if (key === "cfpDeadline" || key === "eventDates") {
       const ad = Date.parse(av), bd = Date.parse(bv);
       base = (!isNaN(ad) && !isNaN(bd)) ? (ad - bd) : av.toLowerCase().localeCompare(bv.toLowerCase());
     } else {
@@ -337,7 +338,7 @@ function render() {
   renderHead();
   document.getElementById("count").textContent = proposals.length + " record(s)";
   if (proposals.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" class="muted">No proposals yet. Click “New proposal” to start.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" class="muted">No proposals yet. Click “New proposal” to start.</td></tr>';
     return;
   }
   tbody.innerHTML = sortedProposals().map(function (p) {
@@ -347,6 +348,7 @@ function render() {
       "<td>" + esc(p.title) + "</td>" +
       '<td><span class="pill">' + esc(p.status) + "</span></td>" +
       "<td>" + esc(p.cfpDeadline) + "</td>" +
+      "<td>" + esc(p.eventDates) + "</td>" +
       '<td style="white-space:nowrap">' +
         '<button data-edit="' + p.id + '">Edit</button> ' +
         '<button class="ghost" data-del="' + p.id + '">Delete</button>' +
