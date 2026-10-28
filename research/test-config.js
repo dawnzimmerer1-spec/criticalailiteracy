@@ -3,5 +3,5 @@
 // Do not enable until ready to run ONE fictional test, then turn back off.
 window.DATA_DETECTIVE_TEST = {
   enabled: false,
-  submitUrl: 'https://YOUR-PROJECT-REF.supabase.co/functions/v1/submit-record'
+  submitUrl: 'https://sdwxwhjwydojyyhdynac.supabase.co/functions/v1/submit-record'
 };
